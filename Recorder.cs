@@ -8,18 +8,23 @@ namespace TrackingRecorder
 {
 
   public class Recorder : MonoBehaviour
-  { 
+  {
 
     static string recordingsPath = "DataRecordings";
-		
-		private Recording recording = null;
+
+    private Recording recording = null;
     private float startTimeSec;
+
+    void OnStart()
+    {
+
+    }
 
     void StartRecording()
     {
       recording = ScriptableObject.CreateInstance<Recording>();
       recording.recordingName = "UNIQUE NAME";
-      
+
       startTimeSec = Time.realtimeSinceStartup;
     }
 
@@ -27,12 +32,13 @@ namespace TrackingRecorder
     {
 
     }
-		
-		public void RecordData(string dataString){
-			FrameData data = new FrameData();
+
+    public void RecordData(string dataString)
+    {
+      FrameData data = new FrameData();
       data.time = Time.realtimeSinceStartup - startTimeSec;
       data.data = dataString;
-      
+
       recording.duration = data.time; //always as long as the last data frame
       recording.dataFrames.Add(data);
     }

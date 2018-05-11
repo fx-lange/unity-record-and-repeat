@@ -7,8 +7,8 @@ namespace TrackingRecorder
   {
     public string recordingName = "My Recording";
     // [ReadOnly] TODO doesn't exist -> customproppertydrawer
-    public float duration = 0; 
-    
+    public float duration = 0;
+
     [HideInInspector]
     public List<FrameData> dataFrames = new List<FrameData>();
   }
