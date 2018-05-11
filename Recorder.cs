@@ -12,13 +12,35 @@ namespace TrackingRecorder
 
     static string recordingsPath = "DataRecordings";
 
+    public bool doRecord = false;
+    public bool doSave = false;
+
     private Recording recording = null;
     private float startTimeSec;
     private bool isRecording = false;
 
     void Start()
     {
-      StartRecording();
+      doSave = false;
+    }
+
+    void Update()
+    {
+      if (!isRecording && doRecord)
+      {
+        StartRecording();
+      }
+      else if (isRecording && !doRecord)
+      {
+        StopRecording();
+      }
+      
+      if (doSave)
+      {
+        StopRecording();
+        SaveRecording();
+        doSave = false;
+      }
     }
 
     void StartRecording()
@@ -32,6 +54,7 @@ namespace TrackingRecorder
 
     void StopRecording()
     {
+      doRecord = false;
       isRecording = false;
     }
 
@@ -49,11 +72,16 @@ namespace TrackingRecorder
       recording.duration = data.time; //always as long as the last data frame
       recording.dataFrames.Add(data);
 
-      Debug.Log(recording.dataFrames.Count+" "+data.time.ToString());
+      Debug.Log(recording.dataFrames.Count + " " + data.time.ToString());
     }
 
     void SaveRecording()
     {
+      if (recording==null || recording.duration<=0)
+      {
+        return;
+      }
+      
       string path = "Assets/" + recordingsPath;
       if (!AssetDatabase.IsValidFolder(path))
       {
@@ -66,6 +94,8 @@ namespace TrackingRecorder
 
       AssetDatabase.SaveAssets();
       AssetDatabase.Refresh();
+      
+      recording = null;
     }
   }
 
