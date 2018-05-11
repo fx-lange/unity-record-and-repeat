@@ -12,11 +12,11 @@ namespace TrackingRecorder
             public float duration = 0;
 
             [HideInInspector]
-            public List<FrameData> dataFrames = new List<FrameData>();
+            public List<DataFrame> dataFrames = new List<DataFrame>();
 
-            public FrameData GetFrameData(float timeS)
+            public DataFrame GetFrameData(float timeS)
             {
-                FrameData data = dataFrames.FindLast(x => x.time <= timeS);
+                DataFrame data = dataFrames.FindLast(x => x.time <= timeS);
                 //performance: binary search would be faster O(log n) or random access via fixed fps model O(1) 
                 // -> dataFrames.BinarySearch or SortedList.
                 return data;

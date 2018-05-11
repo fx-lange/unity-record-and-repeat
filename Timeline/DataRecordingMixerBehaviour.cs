@@ -30,7 +30,7 @@ namespace TrackingRecorder
                     if (inputWeight > 0 && input.recording != null)
                     {
                         float timeS = (float)inputPlayable.GetTime();
-                        Recording.FrameData dataFrame = input.recording.GetFrameData(timeS);
+                        Recording.DataFrame dataFrame = input.recording.GetFrameData(timeS);
                         if (dataFrame != null)
                         {
                             trackBinding.UpdateModel(input.recording.GetFrameData(timeS).data);

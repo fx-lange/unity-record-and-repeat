@@ -66,7 +66,7 @@ namespace TrackingRecorder
                     return;
                 }
 
-                FrameData data = new FrameData();
+                DataFrame data = new DataFrame();
                 data.time = Time.realtimeSinceStartup - startTimeSec;
                 data.data = dataString;
 
