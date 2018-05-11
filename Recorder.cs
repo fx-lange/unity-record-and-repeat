@@ -13,17 +13,14 @@ namespace TrackingRecorder
     static string recordingsPath = "DataRecordings";
 		
 		private Recording recording = null;
-
-    void Start()
-    {
-      recording = ScriptableObject.CreateInstance<Recording>();
-      recording.recName = "UNIQUE NAME";
-      SaveRecording(recording);
-    }
+    private float startTimeSec;
 
     void StartRecording()
     {
-
+      recording = ScriptableObject.CreateInstance<Recording>();
+      recording.recordingName = "UNIQUE NAME";
+      
+      startTimeSec = Time.realtimeSinceStartup;
     }
 
     void StopRecording()
@@ -31,11 +28,16 @@ namespace TrackingRecorder
 
     }
 		
-		void RecordData(string data){
-			recording.addData(data);
-		}
+		public void RecordData(string dataString){
+			FrameData data = new FrameData();
+      data.time = Time.realtimeSinceStartup - startTimeSec;
+      data.data = dataString;
+      
+      recording.duration = data.time; //always as long as the last data frame
+      recording.dataFrames.Add(data);
+    }
 
-    static void SaveRecording(Recording recording)
+    void SaveRecording(Recording recording)
     {
       string path = "Assets/" + recordingsPath;
       if (!AssetDatabase.IsValidFolder(path))
@@ -43,7 +45,7 @@ namespace TrackingRecorder
         AssetDatabase.CreateFolder("Assets", recordingsPath);
       }
 
-      string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + recording.recName + ".asset");
+      string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + recording.recordingName + ".asset");
 
       AssetDatabase.CreateAsset(recording, assetPathAndName);
 
