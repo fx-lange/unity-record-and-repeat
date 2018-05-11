@@ -3,13 +3,19 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-[Serializable]
-public class DataRecordingBehaviour : PlayableBehaviour
+namespace TrackingRecorder
 {
-    public TrackingRecorder.Recording recording;
-
-    public override void OnPlayableCreate(Playable playable)
+    namespace Timeline
     {
+        [Serializable]
+        public class DataRecordingBehaviour : PlayableBehaviour
+        {
+            public Recording.DataRecording recording;
 
+            public override void OnPlayableCreate(Playable playable)
+            {
+
+            }
+        }
     }
 }
