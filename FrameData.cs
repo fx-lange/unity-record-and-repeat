@@ -1,6 +1,6 @@
 ﻿namespace TrackingRecorder
 {
-  public class FrameData
+  public struct FrameData
   {
     public float time;
     public string data;

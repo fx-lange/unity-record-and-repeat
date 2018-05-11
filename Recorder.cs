@@ -14,10 +14,11 @@ namespace TrackingRecorder
 
     private Recording recording = null;
     private float startTimeSec;
+    private bool isRecording = false;
 
-    void OnStart()
+    void Start()
     {
-
+      StartRecording();
     }
 
     void StartRecording()
@@ -26,24 +27,32 @@ namespace TrackingRecorder
       recording.recordingName = "UNIQUE NAME";
 
       startTimeSec = Time.realtimeSinceStartup;
+      isRecording = true;
     }
 
     void StopRecording()
     {
-
+      isRecording = false;
     }
 
     public void RecordData(string dataString)
     {
-      FrameData data = new FrameData();
+      if (!isRecording)
+      {
+        return;
+      }
+
+      FrameData data;
       data.time = Time.realtimeSinceStartup - startTimeSec;
       data.data = dataString;
 
       recording.duration = data.time; //always as long as the last data frame
       recording.dataFrames.Add(data);
+
+      Debug.Log(recording.dataFrames.Count+" "+data.time.ToString());
     }
 
-    void SaveRecording(Recording recording)
+    void SaveRecording()
     {
       string path = "Assets/" + recordingsPath;
       if (!AssetDatabase.IsValidFolder(path))
