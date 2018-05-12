@@ -12,7 +12,7 @@ namespace TrackingRecorder
             // NOTE: This function is called at runtime and edit time.  Keep that in mind when setting the values of properties.
             public override void ProcessFrame(Playable playable, FrameData info, object playerData)
             {
-                IDataReceiver trackBinding = playerData as IDataReceiver;
+                IDataListener trackBinding = playerData as IDataListener;
 
                 if (trackBinding != null)
                     return;
@@ -33,7 +33,7 @@ namespace TrackingRecorder
                         Recording.DataFrame dataFrame = input.recording.GetFrameData(timeS);
                         if (dataFrame != null)
                         {
-                            trackBinding.ProcessData(input.recording.GetFrameData(timeS).data);
+                            trackBinding.ProcessData(dataFrame);
                         }
                     }
                 }

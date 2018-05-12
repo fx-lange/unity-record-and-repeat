@@ -3,10 +3,9 @@
     namespace Recording
     {
         [System.Serializable]
-        public class DataFrame
+        public abstract class DataFrame
         {
             public float time;
-            public string data;
         }
     }
 }

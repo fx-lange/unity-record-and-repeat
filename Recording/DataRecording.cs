@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace TrackingRecorder
 {
-    namespace Recording{
-        
+    namespace Recording
+    {
+
         public class DataRecording : ScriptableObject
         {
             public string recordingName = "My Recording";
@@ -26,8 +27,9 @@ namespace TrackingRecorder
             {
                 Debug.Log(recordingName + " " + duration + "seconds " + dataFrames.Count + " samples");
                 Debug.Log(dataFrames.Count);
-                dataFrames.ForEach( frame => {
-                Debug.Log("time: " + frame.time + " data: " + frame.data);
+                dataFrames.ForEach(frame =>
+                {
+                    Debug.Log(frame);
                 });
             }
         }

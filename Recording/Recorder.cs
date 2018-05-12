@@ -8,7 +8,7 @@ namespace TrackingRecorder
 {
     namespace Recording
     {
-        public class Recorder : MonoBehaviour
+        public abstract class Recorder : MonoBehaviour
         {
 
             static string recordingsPath = "DataRecordings";
@@ -59,21 +59,21 @@ namespace TrackingRecorder
                 isRecording = false;
             }
 
-            public void RecordData(string dataString)
+            public void RecordData(DataFrame dataFrame)
             {
                 if (!isRecording)
                 {
                     return;
                 }
 
-                DataFrame data = new DataFrame();
-                data.time = Time.realtimeSinceStartup - startTimeSec;
-                data.data = dataString;
+                // DataFrame<T> dataFrame = new DataFrame<T>();
+                dataFrame.time = Time.realtimeSinceStartup - startTimeSec;
+                // dataFrame.data = data;
 
-                recording.duration = data.time; //always as long as the last data frame
-                recording.dataFrames.Add(data);
+                recording.duration = dataFrame.time; //always as long as the last data frame
+                recording.dataFrames.Add(dataFrame);
 
-                Debug.Log(recording.dataFrames.Count + " " + data.time.ToString());
+                Debug.Log(recording.dataFrames.Count + " " + dataFrame.time.ToString());
             }
 
             void SaveRecording()
