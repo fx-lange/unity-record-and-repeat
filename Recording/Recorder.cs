@@ -10,17 +10,21 @@ namespace TrackingRecorder
     {
         public abstract class Recorder : MonoBehaviour
         {
+            //folder to store recordings
+            protected static string recordingsPath = "DataRecordings";
 
-            static string recordingsPath = "DataRecordings";
-
+            //interface via inspector
             public bool doRecord = false;
             public bool doSave = false;
 
+            //private members
             private DataRecording recording = null;
             private float startTimeSec;
             private bool isRecording = false;
+            
+            protected abstract DataRecording CreateInstance();
 
-            void Start()
+            protected void Start()
             {
                 doSave = false;
             }
@@ -46,7 +50,7 @@ namespace TrackingRecorder
 
             void StartRecording()
             {
-                recording = ScriptableObject.CreateInstance<DataRecording>();
+                recording = CreateInstance();
                 recording.recordingName = "UNIQUE NAME";
 
                 startTimeSec = Time.realtimeSinceStartup;
@@ -57,23 +61,6 @@ namespace TrackingRecorder
             {
                 doRecord = false;
                 isRecording = false;
-            }
-
-            public void RecordData(DataFrame dataFrame)
-            {
-                if (!isRecording)
-                {
-                    return;
-                }
-
-                // DataFrame<T> dataFrame = new DataFrame<T>();
-                dataFrame.time = Time.realtimeSinceStartup - startTimeSec;
-                // dataFrame.data = data;
-
-                recording.duration = dataFrame.time; //always as long as the last data frame
-                recording.dataFrames.Add(dataFrame);
-
-                Debug.Log(recording.dataFrames.Count + " " + dataFrame.time.ToString());
             }
 
             void SaveRecording()
@@ -97,6 +84,19 @@ namespace TrackingRecorder
                 AssetDatabase.Refresh();
 
                 recording = null;
+            }
+            
+            protected void RecordData(DataFrame dataFrame)
+            {
+                if (!isRecording)
+                {
+                    return;
+                }
+
+                dataFrame.time = Time.realtimeSinceStartup - startTimeSec;
+
+                recording.duration = dataFrame.time; //always as long as the last data frame
+                recording.Add(dataFrame);
             }
         }
     }
