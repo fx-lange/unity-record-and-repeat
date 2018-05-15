@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace RecordForTimeline.Timeline
+namespace RecordForTimeline
 {
     public abstract class DataListener : MonoBehaviour
     {

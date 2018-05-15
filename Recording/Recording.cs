@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RecordForTimeline.Recording
+namespace RecordForTimeline
 {
     public abstract class Recording : ScriptableObject
     {

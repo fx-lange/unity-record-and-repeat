@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace RecordForTimeline.Timeline
+namespace RecordForTimeline
 {
     public class RecordingMixerBehaviour : PlayableBehaviour
     {
@@ -28,7 +28,7 @@ namespace RecordForTimeline.Timeline
                 if (inputWeight > 0 && input.recording != null)
                 {
                     float timeS = (float)inputPlayable.GetTime();
-                    Recording.DataFrame dataFrame = input.recording.GetFrameData(timeS);
+                    DataFrame dataFrame = input.recording.GetFrameData(timeS);
                     if (dataFrame != null)
                     {
                         trackBinding.ProcessData(dataFrame);

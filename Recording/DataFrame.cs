@@ -1,4 +1,4 @@
-﻿namespace RecordForTimeline.Recording
+﻿namespace RecordForTimeline
 {
     [System.Serializable]
     public abstract class DataFrame
