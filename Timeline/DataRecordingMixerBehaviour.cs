@@ -14,7 +14,7 @@ namespace TrackingRecorder
             {
                 IDataListener trackBinding = playerData as IDataListener;
 
-                if (trackBinding != null)
+                if (trackBinding == null)
                     return;
 
                 int inputCount = playable.GetInputCount();
@@ -33,7 +33,10 @@ namespace TrackingRecorder
                         Recording.DataFrame dataFrame = input.recording.GetFrameData(timeS);
                         if (dataFrame != null)
                         {
+                            Debug.Log("we got data");
                             trackBinding.ProcessData(dataFrame);
+                        }else{
+                            input.recording.Log();
                         }
                     }
                 }
