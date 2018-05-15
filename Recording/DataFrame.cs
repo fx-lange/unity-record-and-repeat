@@ -1,4 +1,4 @@
-﻿namespace TrackingRecorder
+﻿namespace RecordForTimeline
 {
     namespace Recording
     {

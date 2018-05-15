@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace TrackingRecorder
+namespace RecordForTimeline
 {
     namespace Timeline
     {

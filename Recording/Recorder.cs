@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 
-namespace TrackingRecorder
+namespace RecordForTimeline
 {
     namespace Recording
     {
@@ -18,11 +18,11 @@ namespace TrackingRecorder
             public bool doSave = false;
 
             //private members
-            private DataRecording recording = null;
+            private Recording recording = null;
             private float startTimeSec;
             private bool isRecording = false;
             
-            protected abstract DataRecording CreateInstance();
+            protected abstract Recording CreateInstance();
 
             protected void Start()
             {
