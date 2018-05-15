@@ -1,12 +1,9 @@
 using UnityEngine;
 
-namespace RecordForTimeline
+namespace RecordForTimeline.Timeline
 {
-    namespace Timeline
+    public abstract class DataListener : MonoBehaviour
     {
-        public abstract class DataListener : MonoBehaviour
-        {
-            public abstract void ProcessData(Recording.DataFrame data);
-        }
+        public abstract void ProcessData(Recording.DataFrame data);
     }
 }

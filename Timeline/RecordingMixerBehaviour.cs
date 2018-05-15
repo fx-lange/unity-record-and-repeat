@@ -3,38 +3,35 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace RecordForTimeline
+namespace RecordForTimeline.Timeline
 {
-    namespace Timeline
+    public class RecordingMixerBehaviour : PlayableBehaviour
     {
-        public class RecordingMixerBehaviour : PlayableBehaviour
+        // NOTE: This function is called at runtime and edit time.  Keep that in mind when setting the values of properties.
+        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
         {
-            // NOTE: This function is called at runtime and edit time.  Keep that in mind when setting the values of properties.
-            public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+            DataListener trackBinding = playerData as DataListener;
+
+            if (trackBinding == null)
+                return;
+
+            int inputCount = playable.GetInputCount();
+
+            for (int i = 0; i < inputCount; i++)
             {
-                DataListener trackBinding = playerData as DataListener;
+                float inputWeight = playable.GetInputWeight(i);
+                ScriptPlayable<RecordingBehaviour> inputPlayable =
+                    (ScriptPlayable<RecordingBehaviour>)playable.GetInput(i);
+                RecordingBehaviour input = inputPlayable.GetBehaviour();
 
-                if (trackBinding == null)
-                    return;
-
-                int inputCount = playable.GetInputCount();
-
-                for (int i = 0; i < inputCount; i++)
+                // Use the above variables to process each frame of this playable.
+                if (inputWeight > 0 && input.recording != null)
                 {
-                    float inputWeight = playable.GetInputWeight(i);
-                    ScriptPlayable<RecordingBehaviour> inputPlayable =
-                        (ScriptPlayable<RecordingBehaviour>)playable.GetInput(i);
-                    RecordingBehaviour input = inputPlayable.GetBehaviour();
-
-                    // Use the above variables to process each frame of this playable.
-                    if (inputWeight > 0 && input.recording != null)
+                    float timeS = (float)inputPlayable.GetTime();
+                    Recording.DataFrame dataFrame = input.recording.GetFrameData(timeS);
+                    if (dataFrame != null)
                     {
-                        float timeS = (float)inputPlayable.GetTime();
-                        Recording.DataFrame dataFrame = input.recording.GetFrameData(timeS);
-                        if (dataFrame != null)
-                        {
-                            trackBinding.ProcessData(dataFrame);
-                        }
+                        trackBinding.ProcessData(dataFrame);
                     }
                 }
             }

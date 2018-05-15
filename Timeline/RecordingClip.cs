@@ -3,25 +3,22 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace RecordForTimeline
+namespace RecordForTimeline.Timeline
 {
-    namespace Timeline
+    [Serializable]
+    public class RecordingClip : PlayableAsset, ITimelineClipAsset
     {
-        [Serializable]
-        public class RecordingClip : PlayableAsset, ITimelineClipAsset
+        public RecordingBehaviour template = new RecordingBehaviour();
+
+        public ClipCaps clipCaps
         {
-            public RecordingBehaviour template = new RecordingBehaviour();
+            get { return ClipCaps.None; }
+        }
 
-            public ClipCaps clipCaps
-            {
-                get { return ClipCaps.None; }
-            }
-
-            public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
-            {
-                var playable = ScriptPlayable<RecordingBehaviour>.Create(graph, template);
-                return playable;
-            }
+        public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+        {
+            var playable = ScriptPlayable<RecordingBehaviour>.Create(graph, template);
+            return playable;
         }
     }
 }

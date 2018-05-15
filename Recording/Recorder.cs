@@ -4,102 +4,98 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 
-namespace RecordForTimeline
+namespace RecordForTimeline.Recording
 {
-    namespace Recording
+    public abstract class Recorder : MonoBehaviour
     {
-        public abstract class Recorder : MonoBehaviour
+        //folder to store recordings
+        protected static string recordingsPath = "DataRecordings";
+
+        //interface via inspector
+        public bool doRecord = false;
+        public bool doSave = false;
+
+        //private members
+        private Recording recording = null;
+        private float startTimeSec;
+        private bool isRecording = false;
+        
+        protected abstract Recording CreateInstance();
+
+        protected void Start()
         {
-            //folder to store recordings
-            protected static string recordingsPath = "DataRecordings";
+            doSave = false;
+        }
 
-            //interface via inspector
-            public bool doRecord = false;
-            public bool doSave = false;
-
-            //private members
-            private Recording recording = null;
-            private float startTimeSec;
-            private bool isRecording = false;
-            
-            protected abstract Recording CreateInstance();
-
-            protected void Start()
+        protected void Update()
+        {
+            if (!isRecording && doRecord)
             {
+                StartRecording();
+            }
+            else if (isRecording && !doRecord)
+            {
+                StopRecording();
+            }
+
+            if (doSave)
+            {
+                StopRecording();
+                SaveRecording();
                 doSave = false;
             }
+        }
 
-            protected void Update()
+        void StartRecording()
+        {
+            recording = CreateInstance();
+            recording.recordingName = "UNIQUE NAME";
+
+            startTimeSec = Time.realtimeSinceStartup;
+            isRecording = true;
+        }
+
+        void StopRecording()
+        {
+            doRecord = false;
+            isRecording = false;
+        }
+
+        void SaveRecording()
+        {
+            if (recording == null || recording.duration <= 0)
             {
-                if (!isRecording && doRecord)
-                {
-                    StartRecording();
-                }
-                else if (isRecording && !doRecord)
-                {
-                    StopRecording();
-                }
-
-                if (doSave)
-                {
-                    StopRecording();
-                    SaveRecording();
-                    doSave = false;
-                }
+                return;
             }
 
-            void StartRecording()
+            string path = "Assets/" + recordingsPath;
+            if (!AssetDatabase.IsValidFolder(path))
             {
-                recording = CreateInstance();
-                recording.recordingName = "UNIQUE NAME";
-
-                startTimeSec = Time.realtimeSinceStartup;
-                isRecording = true;
+                AssetDatabase.CreateFolder("Assets", recordingsPath);
             }
 
-            void StopRecording()
+            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + recording.recordingName + ".asset");
+
+            AssetDatabase.CreateAsset(recording, assetPathAndName);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            recording = null;
+        }
+        
+        protected void RecordData(DataFrame dataFrame)
+        {
+            if (!isRecording)
             {
-                doRecord = false;
-                isRecording = false;
+                return;
             }
 
-            void SaveRecording()
-            {
-                if (recording == null || recording.duration <= 0)
-                {
-                    return;
-                }
+            dataFrame.time = Time.realtimeSinceStartup - startTimeSec;
 
-                string path = "Assets/" + recordingsPath;
-                if (!AssetDatabase.IsValidFolder(path))
-                {
-                    AssetDatabase.CreateFolder("Assets", recordingsPath);
-                }
-
-                string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + recording.recordingName + ".asset");
-
-                AssetDatabase.CreateAsset(recording, assetPathAndName);
-
-                AssetDatabase.SaveAssets();
-                AssetDatabase.Refresh();
-
-                recording = null;
-            }
-            
-            protected void RecordData(DataFrame dataFrame)
-            {
-                if (!isRecording)
-                {
-                    return;
-                }
-
-                dataFrame.time = Time.realtimeSinceStartup - startTimeSec;
-
-                recording.duration = dataFrame.time; //always as long as the last data frame
-                recording.Add(dataFrame);
-            }
+            recording.duration = dataFrame.time; //always as long as the last data frame
+            recording.Add(dataFrame);
         }
     }
-
 }
 

@@ -3,19 +3,16 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace RecordForTimeline
+namespace RecordForTimeline.Timeline
 {
-    namespace Timeline
+    [Serializable]
+    public class RecordingBehaviour : PlayableBehaviour
     {
-        [Serializable]
-        public class RecordingBehaviour : PlayableBehaviour
+        public Recording.Recording recording;
+
+        public override void OnPlayableCreate(Playable playable)
         {
-            public Recording.Recording recording;
 
-            public override void OnPlayableCreate(Playable playable)
-            {
-
-            }
         }
     }
 }

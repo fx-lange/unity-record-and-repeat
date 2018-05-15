@@ -1,11 +1,8 @@
-﻿namespace RecordForTimeline
+﻿namespace RecordForTimeline.Recording
 {
-    namespace Recording
+    [System.Serializable]
+    public abstract class DataFrame
     {
-        [System.Serializable]
-        public abstract class DataFrame
-        {
-            public float time;
-        }
+        public float time;
     }
 }
