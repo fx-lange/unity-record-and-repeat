@@ -4,6 +4,6 @@ namespace RecordForTimeline
 {
     public abstract class DataListener : MonoBehaviour
     {
-        public abstract void ProcessData(Recording.DataFrame data);
+        public abstract void ProcessData(DataFrame data);
     }
 }
