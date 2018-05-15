@@ -25,7 +25,7 @@ namespace TrackingRecorder
                 doSave = false;
             }
 
-            void Update()
+            protected void Update()
             {
                 if (!isRecording && doRecord)
                 {

@@ -27,10 +27,7 @@ namespace TrackingRecorder
             {
                 Debug.Log(recordingName + " " + duration + "seconds " + dataFrames.Count + " samples");
                 Debug.Log(dataFrames.Count);
-                dataFrames.ForEach(frame =>
-                {
-                    Debug.Log(frame);
-                });
+                dataFrames.ForEach(frame => Debug.Log(frame));
             }
         }
     }
