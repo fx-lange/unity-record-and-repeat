@@ -7,13 +7,13 @@ namespace RecordForTimeline
     namespace Timeline
     {
         [TrackColor(0.855f, 0.8623f, 0.87f)]
-        [TrackClipType(typeof(DataRecordingClip))]
-        [TrackBindingType(typeof(OpenPoseDrawer))]
-        public class DataRecordingTrack : TrackAsset
+        [TrackClipType(typeof(RecordingClip))]
+        [TrackBindingType(typeof(DataListener))]
+        public class RecordingTrack : TrackAsset
         {
             public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
             {
-                return ScriptPlayable<DataRecordingMixerBehaviour>.Create(graph, inputCount);
+                return ScriptPlayable<RecordingMixerBehaviour>.Create(graph, inputCount);
             }
         }
     }

@@ -8,9 +8,9 @@ namespace RecordForTimeline
     namespace Timeline
     {
         [Serializable]
-        public class DataRecordingClip : PlayableAsset, ITimelineClipAsset
+        public class RecordingClip : PlayableAsset, ITimelineClipAsset
         {
-            public DataRecordingBehaviour template = new DataRecordingBehaviour();
+            public RecordingBehaviour template = new RecordingBehaviour();
 
             public ClipCaps clipCaps
             {
@@ -19,7 +19,7 @@ namespace RecordForTimeline
 
             public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
             {
-                var playable = ScriptPlayable<DataRecordingBehaviour>.Create(graph, template);
+                var playable = ScriptPlayable<RecordingBehaviour>.Create(graph, template);
                 return playable;
             }
         }

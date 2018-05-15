@@ -7,12 +7,12 @@ namespace RecordForTimeline
 {
     namespace Timeline
     {
-        public class DataRecordingMixerBehaviour : PlayableBehaviour
+        public class RecordingMixerBehaviour : PlayableBehaviour
         {
             // NOTE: This function is called at runtime and edit time.  Keep that in mind when setting the values of properties.
             public override void ProcessFrame(Playable playable, FrameData info, object playerData)
             {
-                IDataListener trackBinding = playerData as IDataListener;
+                DataListener trackBinding = playerData as DataListener;
 
                 if (trackBinding == null)
                     return;
@@ -22,9 +22,9 @@ namespace RecordForTimeline
                 for (int i = 0; i < inputCount; i++)
                 {
                     float inputWeight = playable.GetInputWeight(i);
-                    ScriptPlayable<DataRecordingBehaviour> inputPlayable =
-                        (ScriptPlayable<DataRecordingBehaviour>)playable.GetInput(i);
-                    DataRecordingBehaviour input = inputPlayable.GetBehaviour();
+                    ScriptPlayable<RecordingBehaviour> inputPlayable =
+                        (ScriptPlayable<RecordingBehaviour>)playable.GetInput(i);
+                    RecordingBehaviour input = inputPlayable.GetBehaviour();
 
                     // Use the above variables to process each frame of this playable.
                     if (inputWeight > 0 && input.recording != null)

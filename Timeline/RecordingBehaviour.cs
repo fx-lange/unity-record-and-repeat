@@ -8,7 +8,7 @@ namespace RecordForTimeline
     namespace Timeline
     {
         [Serializable]
-        public class DataRecordingBehaviour : PlayableBehaviour
+        public class RecordingBehaviour : PlayableBehaviour
         {
             public Recording.Recording recording;
 
