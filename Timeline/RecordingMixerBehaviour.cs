@@ -33,10 +33,7 @@ namespace RecordForTimeline
                         Recording.DataFrame dataFrame = input.recording.GetFrameData(timeS);
                         if (dataFrame != null)
                         {
-                            Debug.Log("we got data");
                             trackBinding.ProcessData(dataFrame);
-                        }else{
-                            input.recording.Log();
                         }
                     }
                 }
