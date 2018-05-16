@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RecordForTimeline
 {
-    public class JsonDataRecorder : Recorder
+    public class StringRecorder : Recorder
     {
         public bool createTestRecording = false;
         int samples = 120;
@@ -30,12 +30,12 @@ namespace RecordForTimeline
 
         protected override Recording CreateInstance()
         {
-            return ScriptableObject.CreateInstance<JsonDataRecording>();
+            return ScriptableObject.CreateInstance<StringRecording>();
         }
 
         public void RecordData(string data)
         {
-            JsonData opData = new JsonData();
+            StringData opData = new StringData();
             opData.data = data;
 
             RecordData(opData);

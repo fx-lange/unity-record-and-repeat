@@ -3,14 +3,14 @@ using UnityEngine;
 using System.Linq;
 
 namespace RecordForTimeline{
-    public class JsonDataRecording : Recording
+    public class StringRecording : Recording
     {
         [SerializeField]
-        private List<JsonData> myData = new List<JsonData>();
+        private List<StringData> myData = new List<StringData>();
 
         public override void Add(DataFrame data)
         {
-            myData.Add((JsonData)data);
+            myData.Add((StringData)data);
         }
 
         protected override IEnumerable<DataFrame> GetDataFrames()
