@@ -13,7 +13,10 @@ namespace RecordForTimeline
             DataListener trackBinding = playerData as DataListener;
 
             if (trackBinding == null)
+            {
+                Debug.LogWarning("Track without Trackbinding");
                 return;
+            }
 
             int inputCount = playable.GetInputCount();
 
