@@ -1,4 +1,4 @@
-namespace RecordForTimeline
+namespace RecordAndPlay
 {
     [System.Serializable]
     public class StringData : DataFrame

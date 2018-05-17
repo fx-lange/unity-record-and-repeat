@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 
-namespace RecordForTimeline
+namespace RecordAndPlay
 {
     public abstract class Recorder : MonoBehaviour
     {

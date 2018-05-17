@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-namespace RecordForTimeline{
+namespace RecordAndPlay{
     public class StringRecording : Recording
     {
         [SerializeField]

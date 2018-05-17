@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RecordForTimeline
+namespace RecordAndPlay
 {
     public class StringRecorder : Recorder
     {
