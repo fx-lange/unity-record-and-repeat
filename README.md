@@ -33,7 +33,8 @@ For recording your own data you need to implement three abstract classes - pleas
   
 ### Play
 
-Recordings can easily be dragged&dropped into Timeline RecordingTracks/RecordingClips. To receive your "MyCustomData" during playback 
-a `DataListener` implementation is needed - overriding the `void ProcessData(DataFrame data)` method. 
+Recordings stored as `ScriptableObjects` in the asset folder can be dragged&dropped into Timeline RecordingTracks/RecordingClips. 
 
-Finally, add your listener game object as a TrackBinding into RecordAndPlay RecordingTracks.
+To receive your "MyCustomData" during playback a `DataListener` implementation is needed - overriding the `void ProcessData(DataFrame data)` method. 
+
+Finally, add your listener game object as a TrackBinding into RecordAndPlay RecordingTracks. This game object is probably already part of your application - now using recorded instead of live data.
