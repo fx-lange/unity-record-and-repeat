@@ -37,6 +37,6 @@ public class MouseRecorder : StringRecorder
         {
             Gizmos.color = Color.grey;
         }
-        Gizmos.DrawSphere(mouseWorldPos, 1);
+        Gizmos.DrawWireSphere(mouseWorldPos, 1);
     }
 }

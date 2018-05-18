@@ -12,14 +12,13 @@ public class MouseDrawer : DataListener
 	//TODO activate draw gizmos in game view!
 
     public override void ProcessData(DataFrame results){
-		StringData json = results as StringData;
-		mouseWorldPos = JsonUtility.FromJson<Vector3>(json.data);
-		Debug.Log(json);
+		StringData stringData = results as StringData;
+		mouseWorldPos = JsonUtility.FromJson<Vector3>(stringData.data);
 	}
 
     void OnDrawGizmos()
     {
 		Gizmos.color = Color.green;
-        Gizmos.DrawSphere(mouseWorldPos, 1);
+        Gizmos.DrawWireSphere(mouseWorldPos, 1);
     }
 }
