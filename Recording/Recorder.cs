@@ -18,7 +18,7 @@ namespace RecordAndPlay
         //private members
         private Recording recording = null;
         private float startTimeSec;
-        private bool isRecording = false;
+        protected bool isRecording = false;
         
         protected abstract Recording CreateInstance();
 
