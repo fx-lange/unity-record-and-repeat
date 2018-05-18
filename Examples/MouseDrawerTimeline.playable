@@ -31,7 +31,7 @@ MonoBehaviour:
   m_Name: RecordingClip
   m_EditorClassIdentifier: 
   template:
-    recording: {fileID: 11400000, guid: 3fcca88b637e34fd386501a811395c98, type: 2}
+    recording: {fileID: 11400000, guid: 833ac64febb1b44d395afd44e315f8aa, type: 2}
 --- !u!114 &114774859078110122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53,7 +53,7 @@ MonoBehaviour:
   - m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: 114340472990660446}
-    m_Duration: 10.566666666666666
+    m_Duration: 10
     m_TimeScale: 1
     m_ParentTrack: {fileID: 114774859078110122}
     m_EaseInDuration: 0
