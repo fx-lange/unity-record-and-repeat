@@ -7,8 +7,15 @@ using RecordAndPlay;
 //record mouse position as world coordinates
 public class MouseRecorder : StringRecorder
 {
-
-    private Vector3 mouseWorldPos;
+    
+    [System.Serializable]
+    public class MouseData
+    {
+        public Vector3 worldPos;
+        public bool pressed;
+    }
+    
+    private MouseData mouseData = new MouseData();
 
     protected new void Update()
     {
@@ -17,11 +24,12 @@ public class MouseRecorder : StringRecorder
         Vector3 mouse = Input.mousePosition;
         mouse.z = 10;
 
-        mouseWorldPos = Camera.main.ScreenToWorldPoint(mouse);
+        mouseData.worldPos = Camera.main.ScreenToWorldPoint(mouse);
+        mouseData.pressed = Input.GetMouseButton(0);
 
         if (isRecording)
         {
-            string json = JsonUtility.ToJson(mouseWorldPos);
+            string json = JsonUtility.ToJson(mouseData);
             Debug.Log(json);
             RecordData(json);
         }
@@ -37,6 +45,6 @@ public class MouseRecorder : StringRecorder
         {
             Gizmos.color = Color.grey;
         }
-        Gizmos.DrawWireSphere(mouseWorldPos, 1);
+        Gizmos.DrawWireSphere(mouseData.worldPos, mouseData.pressed ? 1.2f : 1f);
     }
 }
