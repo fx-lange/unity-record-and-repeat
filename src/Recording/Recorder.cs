@@ -34,7 +34,9 @@ namespace RecordAndPlay
         protected static string recordingsPath = "DataRecordings";
 
         //interface via inspector
+        [HideInInspector]
         public bool doRecord = false;
+        [HideInInspector]
         public bool doSave = false;
 
         //private members
