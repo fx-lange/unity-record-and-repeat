@@ -12,7 +12,22 @@ namespace RecordAndPlay
 
         public ClipCaps clipCaps
         {
-            get { return ClipCaps.None; }
+            get { return ClipCaps.Looping | ClipCaps.ClipIn; }
+        }
+
+        public override double duration
+        {
+            get
+            {
+                if (template.recording)
+                {
+                    return template.recording.duration;
+                }
+                else
+                {
+                    return base.duration;
+                }
+            }
         }
 
         public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
