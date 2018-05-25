@@ -3,17 +3,18 @@ using UnityEditor;
 using RecordAndPlay;
 
 [CustomEditor(typeof(Recorder), true)]
-public class TimeMachineClipInspector : Editor
+public class RecorderInspector : Editor
 {
     SerializedProperty recordProp;
     SerializedProperty saveProp;
+    SerializedProperty recordingProp;
 
     void OnEnable()
     {
         // Setup the SerializedProperties.
         recordProp = serializedObject.FindProperty("doRecord");
         saveProp = serializedObject.FindProperty("doSave");
-        // gunProp = serializedObject.FindProperty ("gun");
+        recordingProp = serializedObject.FindProperty("recording");
     }
 
     public override void OnInspectorGUI()
@@ -22,6 +23,7 @@ public class TimeMachineClipInspector : Editor
 
         serializedObject.Update();
 
+
         EditorGUILayout.Space();
 
         GUIStyle buttonStyle = EditorStyles.miniButtonMid;
@@ -29,7 +31,27 @@ public class TimeMachineClipInspector : Editor
 
         // record toggle
         string toggleLabel = recordProp.boolValue ? "Recording" : "Record";
-        recordProp.boolValue = !GUILayout.Toggle(!recordProp.boolValue, toggleLabel, buttonStyle, height);
+        recordProp.boolValue = GUILayout.Toggle(recordProp.boolValue, toggleLabel, buttonStyle, height);
+
+        if (recordProp.boolValue)
+        {
+            Object recordingRef = recordingProp.objectReferenceValue;
+            if(recordingRef){
+                SerializedObject soSO = new SerializedObject(recordingRef);
+                if (soSO != null)
+                {
+                    SerializedProperty nameProp = soSO.FindProperty("recordingName");
+                    EditorGUILayout.PropertyField(nameProp);
+                    
+                    SerializedProperty durationProp = soSO.FindProperty("duration");
+                    EditorGUILayout.LabelField("Duration",durationProp.floatValue.ToString());
+                    
+                    soSO.ApplyModifiedPropertiesWithoutUndo();
+                    
+                    Repaint(); //maybe not everyframe but every second?
+                }
+            }
+        }
 
         // save button
         if (GUILayout.Button("Save Recording", buttonStyle, height))
