@@ -40,10 +40,12 @@ namespace RecordAndPlay
         public bool doSave = false;
 
         //private members
+        [SerializeField]
+        [HideInInspector]
         private Recording recording = null;
         private float startTimeSec;
         protected bool isRecording = false;
-        
+
         protected abstract Recording CreateInstance();
 
         protected void Start()
@@ -107,7 +109,7 @@ namespace RecordAndPlay
 
             recording = null;
         }
-        
+
         protected void RecordData(DataFrame dataFrame)
         {
             if (!isRecording)
