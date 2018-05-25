@@ -45,6 +45,9 @@ namespace RecordAndPlay
         private Recording recording = null;
         private float startTimeSec;
         protected bool isRecording = false;
+        [SerializeField]
+        [HideInInspector]
+        protected string responseText;
 
         protected abstract Recording CreateInstance();
 
@@ -91,6 +94,7 @@ namespace RecordAndPlay
         {
             if (recording == null || recording.duration <= 0)
             {
+                responseText = "Nothing recorded yet, can't save Recording.";
                 return;
             }
 
@@ -103,7 +107,8 @@ namespace RecordAndPlay
             string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + recording.recordingName + ".asset");
 
             AssetDatabase.CreateAsset(recording, assetPathAndName);
-
+            responseText = "Recording stored under "+assetPathAndName+".";
+            
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
