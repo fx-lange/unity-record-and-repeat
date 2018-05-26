@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -53,7 +54,7 @@ namespace RecordAndPlay
         {
             UpdateStoredDataCopy();
 
-            Debug.Log(recordingName + " " + duration + "seconds " + copiedDataFrames.Count + " samples");
+            Debug.Log(String.Format("{0} {1} seconds {2} samples", recordingName, duration, copiedDataFrames.Count));
             copiedDataFrames.ForEach(frame => Debug.Log(frame));
         }
 
