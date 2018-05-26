@@ -7,6 +7,7 @@ public class RecorderInspector : Editor
 {
     SerializedProperty recordProp;
     SerializedProperty saveProp;
+    SerializedProperty cancelProp;
     SerializedProperty recordingProp;
     SerializedProperty responseProp;
 
@@ -17,6 +18,7 @@ public class RecorderInspector : Editor
         // Setup the SerializedProperties.
         recordProp = serializedObject.FindProperty("doRecord");
         saveProp = serializedObject.FindProperty("doSave");
+        cancelProp = serializedObject.FindProperty("doCancel");
         recordingProp = serializedObject.FindProperty("recording");
         responseProp = serializedObject.FindProperty("responseText");
     }
@@ -64,6 +66,11 @@ public class RecorderInspector : Editor
         if (GUILayout.Button("Save Recording", buttonStyle, height))
         {
             saveProp.boolValue = true;
+            showFeedback = true;
+        }
+        if (GUILayout.Button("Cancel Recording", buttonStyle, height))
+        {
+            cancelProp.boolValue = true;
             showFeedback = true;
         }
 

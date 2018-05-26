@@ -39,6 +39,8 @@ namespace RecordAndPlay
         public bool doRecord = false;
         [HideInInspector]
         public bool doSave = false;
+        [HideInInspector]
+        public bool doCancel = false;
 
         //private members
         private float startTimeSec;
@@ -48,7 +50,7 @@ namespace RecordAndPlay
         [SerializeField]
         [HideInInspector]
         private Recording recording = null;
-        
+
         [SerializeField]
         [HideInInspector]
         protected string responseText;
@@ -78,10 +80,11 @@ namespace RecordAndPlay
 
             if (doSave)
             {
-                doSave = false;
-                isRecording = false;
-                doRecord = false;
                 SaveRecording();
+            }
+            else if (doCancel)
+            {
+                CancelRecording();
             }
         }
 
@@ -109,15 +112,23 @@ namespace RecordAndPlay
             isPaused = false;
             // Debug.Log(String.Format("ContinueRecording after {0}",pauseDuration));
         }
-        
+
         void CancelRecording()
         {
+            doCancel = false;
+            doRecord = false;
             isRecording = false;
             recording = null;
+            
+            responseText = "Recording canceled!";
         }
 
         void SaveRecording()
         {
+            doSave = false;
+            isRecording = false;
+            doRecord = false;
+                
             if (recording == null || recording.duration <= 0)
             {
                 responseText = "Nothing recorded yet, can't save Recording.";
