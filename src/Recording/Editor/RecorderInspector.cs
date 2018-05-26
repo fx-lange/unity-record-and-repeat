@@ -27,35 +27,36 @@ public class RecorderInspector : Editor
     {
         serializedObject.Update();
 
-        DrawDefaultInspector();
-
-        EditorGUILayout.Space();
+        Recorder recorder = target as Recorder;
 
         GUIStyle buttonStyle = EditorStyles.miniButtonMid;
         GUILayoutOption height = GUILayout.Height(20);
+
+        DrawDefaultInspector();
+        EditorGUILayout.Space();
 
         // record toggle
         string toggleLabel = recordProp.boolValue ? "Recording" : "Record";
         recordProp.boolValue = GUILayout.Toggle(recordProp.boolValue, toggleLabel, buttonStyle, height);
 
-        if (recordProp.boolValue)
+        if (recorder.IsRecording)
         {
             showFeedback = false;
 
             Object recordingRef = recordingProp.objectReferenceValue;
             if (recordingRef)
             {
-                SerializedObject soSO = new SerializedObject(recordingRef);
-                if (soSO != null)
+                SerializedObject recordingSO = new SerializedObject(recordingRef);
+                if (recordingSO != null)
                 {
-                    SerializedProperty nameProp = soSO.FindProperty("recordingName");
+                    SerializedProperty nameProp = recordingSO.FindProperty("recordingName");
                     EditorGUILayout.PropertyField(nameProp);
 
-                    SerializedProperty durationProp = soSO.FindProperty("duration");
+                    SerializedProperty durationProp = recordingSO.FindProperty("duration");
                     EditorGUILayout.LabelField("Duration", durationProp.floatValue.ToString());
 
 
-                    soSO.ApplyModifiedPropertiesWithoutUndo();
+                    recordingSO.ApplyModifiedPropertiesWithoutUndo();
 
                     Repaint(); //maybe not everyframe but every second?
                 }
