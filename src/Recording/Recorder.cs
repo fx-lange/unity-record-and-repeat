@@ -20,11 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using System.IO;
 
 namespace RecordAndPlay
 {
@@ -40,11 +41,14 @@ namespace RecordAndPlay
         public bool doSave = false;
 
         //private members
+        private float startTimeSec;
+        private float pauseStartTimeSec;
+        protected bool isRecording = false;
+        protected bool isPaused = false;
         [SerializeField]
         [HideInInspector]
         private Recording recording = null;
-        private float startTimeSec;
-        protected bool isRecording = false;
+        
         [SerializeField]
         [HideInInspector]
         protected string responseText;
@@ -54,6 +58,7 @@ namespace RecordAndPlay
         protected void Start()
         {
             doSave = false;
+            doRecord = false;
         }
 
         protected void Update()
@@ -62,16 +67,21 @@ namespace RecordAndPlay
             {
                 StartRecording();
             }
-            else if (isRecording && !doRecord)
+            else if (isRecording && !isPaused && !doRecord)
             {
-                StopRecording();
+                PauseRecording();
+            }
+            else if (isRecording && isPaused && doRecord)
+            {
+                ContinueRecording();
             }
 
             if (doSave)
             {
-                StopRecording();
-                SaveRecording();
                 doSave = false;
+                isRecording = false;
+                doRecord = false;
+                SaveRecording();
             }
         }
 
@@ -82,12 +92,28 @@ namespace RecordAndPlay
 
             startTimeSec = Time.realtimeSinceStartup;
             isRecording = true;
+            isPaused = false;
         }
 
-        void StopRecording()
+        void PauseRecording()
         {
-            doRecord = false;
+            // Debug.Log("PauseRecording");
+            isPaused = true;
+            pauseStartTimeSec = Time.realtimeSinceStartup;
+        }
+
+        void ContinueRecording()
+        {
+            float pauseDuration = Time.realtimeSinceStartup - pauseStartTimeSec;
+            startTimeSec += pauseDuration;
+            isPaused = false;
+            // Debug.Log(String.Format("ContinueRecording after {0}",pauseDuration));
+        }
+        
+        void CancelRecording()
+        {
             isRecording = false;
+            recording = null;
         }
 
         void SaveRecording()
@@ -107,8 +133,8 @@ namespace RecordAndPlay
             string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + recording.recordingName + ".asset");
 
             AssetDatabase.CreateAsset(recording, assetPathAndName);
-            responseText = "Recording stored under "+assetPathAndName+".";
-            
+            responseText = String.Format("Recording stored under {0}.", assetPathAndName);
+
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
@@ -117,7 +143,7 @@ namespace RecordAndPlay
 
         protected void RecordData(DataFrame dataFrame)
         {
-            if (!isRecording)
+            if (!isRecording || isPaused)
             {
                 return;
             }
