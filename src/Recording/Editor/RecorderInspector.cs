@@ -24,19 +24,26 @@ public class RecorderInspector : Editor
         cancelProp = serializedObject.FindProperty("doCancel");
         recordingProp = serializedObject.FindProperty("recording");
         responseProp = serializedObject.FindProperty("responseText");
-        
-        buttonStyle = EditorStyles.miniButtonMid;
-        height = GUILayout.Height(20);
+
     }
 
     public override void OnInspectorGUI()
     {
+        buttonStyle = EditorStyles.miniButtonMid;
+        height = GUILayout.Height(20);
+
         serializedObject.Update();
 
         Recorder recorder = target as Recorder;
 
         DrawDefaultInspector();
         EditorGUILayout.Space();
+
+        // disable gui outside play mode
+        if (!Application.isPlaying)
+        {
+            GUI.enabled = false;
+        }
 
         // record toggle
         RecordToggle();
@@ -47,19 +54,24 @@ public class RecorderInspector : Editor
             RecordingGroup();
         }
 
+        //only enable save/cancel during recording
+        GUI.enabled = GUI.enabled && recorder.IsRecording;
+
         // save button
         if (GUILayout.Button("Save Recording", buttonStyle, height))
         {
             saveProp.boolValue = true;
             showFeedback = true;
         }
-        
+
         // cancel button
         if (GUILayout.Button("Cancel Recording", buttonStyle, height))
         {
             cancelProp.boolValue = true;
             showFeedback = true;
         }
+
+        GUI.enabled = true;
 
         // feedback helpbox
         if (showFeedback)
