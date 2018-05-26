@@ -57,7 +57,8 @@ namespace RecordAndPlay
 
         //properties
         public bool IsRecording { get { return isRecording; } }
-        
+        public bool IsPaused { get { return isPaused; } }
+
         protected abstract Recording CreateInstance();
 
         protected void Start()
