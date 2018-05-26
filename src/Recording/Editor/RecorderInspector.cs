@@ -10,10 +10,7 @@ public class RecorderInspector : Editor
     SerializedProperty recordingProp;
     SerializedProperty responseProp;
 
-    float helpBoxDuration = 30;
-    float saveTiming;
-
-
+    bool showFeedback = false;
 
     void OnEnable()
     {
@@ -22,16 +19,13 @@ public class RecorderInspector : Editor
         saveProp = serializedObject.FindProperty("doSave");
         recordingProp = serializedObject.FindProperty("recording");
         responseProp = serializedObject.FindProperty("responseText");
-
-        saveTiming = -helpBoxDuration;
     }
 
     public override void OnInspectorGUI()
     {
-        DrawDefaultInspector();
-
         serializedObject.Update();
 
+        DrawDefaultInspector();
 
         EditorGUILayout.Space();
 
@@ -44,6 +38,8 @@ public class RecorderInspector : Editor
 
         if (recordProp.boolValue)
         {
+            showFeedback = false;
+
             Object recordingRef = recordingProp.objectReferenceValue;
             if (recordingRef)
             {
@@ -68,14 +64,14 @@ public class RecorderInspector : Editor
         if (GUILayout.Button("Save Recording", buttonStyle, height))
         {
             saveProp.boolValue = true;
-            saveTiming = Time.realtimeSinceStartup;
+            showFeedback = true;
         }
 
-        if (Time.realtimeSinceStartup - saveTiming < helpBoxDuration)
+        if (showFeedback)
         {
-            EditorGUILayout.HelpBox(new GUIContent(responseProp.stringValue));
+            EditorGUILayout.HelpBox(responseProp.stringValue, MessageType.Info);
         }
-           
+
         EditorGUILayout.Space();
 
         serializedObject.ApplyModifiedPropertiesWithoutUndo();
