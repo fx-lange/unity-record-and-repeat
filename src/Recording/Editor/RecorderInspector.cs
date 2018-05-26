@@ -103,6 +103,8 @@ public class RecorderInspector : Editor
 
     private void RecordingGroup()
     {
+        Recorder recorder = target as Recorder;
+        
         showFeedback = false;
 
         Object recordingRef = recordingProp.objectReferenceValue;
@@ -111,12 +113,13 @@ public class RecorderInspector : Editor
             SerializedObject recordingSO = new SerializedObject(recordingRef);
             if (recordingSO != null)
             {
+                EditorGUILayout.LabelField("Destination Folder",recorder.DestinationFolder);
+                
                 SerializedProperty nameProp = recordingSO.FindProperty("recordingName");
                 EditorGUILayout.PropertyField(nameProp);
 
                 SerializedProperty durationProp = recordingSO.FindProperty("duration");
                 EditorGUILayout.LabelField("Duration", durationProp.floatValue.ToString());
-
 
                 recordingSO.ApplyModifiedPropertiesWithoutUndo();
 
