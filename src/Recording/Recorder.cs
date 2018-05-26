@@ -45,16 +45,19 @@ namespace RecordAndPlay
         //private members
         private float startTimeSec;
         private float pauseStartTimeSec;
-        protected bool isRecording = false;
-        protected bool isPaused = false;
+        private bool isRecording = false;
+        private bool isPaused = false;
         [SerializeField]
         [HideInInspector]
         private Recording recording = null;
 
         [SerializeField]
         [HideInInspector]
-        protected string responseText;
+        private string responseText;
 
+        //properties
+        public bool IsRecording { get { return isRecording; } }
+        
         protected abstract Recording CreateInstance();
 
         protected void Start()
@@ -119,7 +122,7 @@ namespace RecordAndPlay
             doRecord = false;
             isRecording = false;
             recording = null;
-            
+
             responseText = "Recording canceled!";
         }
 
@@ -128,7 +131,7 @@ namespace RecordAndPlay
             doSave = false;
             isRecording = false;
             doRecord = false;
-                
+
             if (recording == null || recording.duration <= 0)
             {
                 responseText = "Nothing recorded yet, can't save Recording.";
