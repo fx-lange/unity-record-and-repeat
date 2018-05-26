@@ -24,7 +24,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-namespace RecordAndPlay{
+namespace RecordAndPlay
+{
     public class StringRecording : Recording
     {
         [SerializeField]
@@ -38,6 +39,11 @@ namespace RecordAndPlay{
         protected override IEnumerable<DataFrame> GetDataFrames()
         {
             return dataFrames.Cast<DataFrame>();
+        }
+
+        public override int FrameCount()
+        {
+            return dataFrames.Count();
         }
     }
 }

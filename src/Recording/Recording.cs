@@ -35,8 +35,9 @@ namespace RecordAndPlay
 
         private List<DataFrame> copiedDataFrames = null;
 
-        protected abstract IEnumerable<DataFrame> GetDataFrames();
         public abstract void Add(DataFrame data);
+        protected abstract IEnumerable<DataFrame> GetDataFrames();
+        public abstract int FrameCount();
 
         public DataFrame GetFrameData(float timeS)
         {
