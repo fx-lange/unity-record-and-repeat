@@ -107,7 +107,7 @@ public class RecorderInspector : Editor
         
         showFeedback = false;
 
-        Object recordingRef = recordingProp.objectReferenceValue;
+        Recording recordingRef = recordingProp.objectReferenceValue as Recording;
         if (recordingRef)
         {
             SerializedObject recordingSO = new SerializedObject(recordingRef);
@@ -120,6 +120,8 @@ public class RecorderInspector : Editor
 
                 SerializedProperty durationProp = recordingSO.FindProperty("duration");
                 EditorGUILayout.LabelField("Duration", durationProp.floatValue.ToString());
+                
+                EditorGUILayout.LabelField("Frame Count", recordingRef.FrameCount().ToString());
 
                 recordingSO.ApplyModifiedPropertiesWithoutUndo();
 
