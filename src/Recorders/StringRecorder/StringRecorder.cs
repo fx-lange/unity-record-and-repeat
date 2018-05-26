@@ -35,10 +35,10 @@ namespace RecordAndPlay
 
         public void RecordData(string data)
         {
-            StringData opData = new StringData();
-            opData.data = data;
+            StringData stringData = new StringData();
+            stringData.data = data;
 
-            RecordData(opData);
+            RecordData(stringData);
         }
     }
 }
