@@ -58,6 +58,10 @@ namespace RecordAndPlay
         //properties
         public bool IsRecording { get { return isRecording; } }
         public bool IsPaused { get { return isPaused; } }
+        public string DestinationFolder
+        {
+            get { return String.Format("Assets/{0}", recordingsPath); }
+        }
 
         protected abstract Recording CreateInstance();
 
