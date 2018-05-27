@@ -52,6 +52,7 @@ public class RecorderInspector : Editor
         if (recorder.IsRecording)
         {
             RecordingGroup();
+            Repaint(); //maybe not everyframe but every second?
         }
 
         //only enable save/cancel during recording
@@ -124,8 +125,6 @@ public class RecorderInspector : Editor
                 EditorGUILayout.LabelField("Frame Count", recordingRef.FrameCount().ToString());
 
                 recordingSO.ApplyModifiedPropertiesWithoutUndo();
-
-                Repaint(); //maybe not everyframe but every second?
             }
         }
     }
