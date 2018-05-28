@@ -123,23 +123,17 @@ namespace RecordAndPlay
 
         void CancelRecording()
         {
-            doCancel = false;
-            doRecord = false;
-            isRecording = false;
-            recording = null;
+            ResetRecorder();
 
             responseText = "Recording canceled!";
         }
 
         void SaveRecording()
         {
-            doSave = false;
-            isRecording = false;
-            doRecord = false;
-
             if (recording == null || recording.duration <= 0)
             {
                 responseText = "Nothing recorded yet, can't save Recording.";
+                ResetRecorder();
                 return;
             }
 
@@ -157,6 +151,13 @@ namespace RecordAndPlay
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
+            ResetRecorder();
+        }
+
+        private void ResetRecorder()
+        {
+            isPaused = isRecording = false;
+            doCancel = doSave = doRecord = false;
             recording = null;
         }
 
