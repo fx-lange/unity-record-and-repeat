@@ -14,10 +14,15 @@ namespace RecordAndPlay
             foreach (var clip in GetClips())
             {
                 RecordingClip recordingClip = clip.asset as RecordingClip;
-                Recording recording = recordingClip.template.recording;
-                if (recording)
+                Recording recordingRef = recordingClip.template.recording;
+                if (recordingRef)
                 {
-                    clip.displayName = "Recording: " + recording.recordingName;
+                    if (recordingClip.template.RecordingChanged())
+                    {
+                        clip.displayName = "Recording: " + recordingRef.recordingName;
+                        clip.duration = recordingClip.duration;
+                        clip.clipIn = 0;
+                    }
                 }
                 else
                 {
