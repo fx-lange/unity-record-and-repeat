@@ -96,7 +96,7 @@ public class RecorderInspector : Editor
         }
         else
         {
-            toggleLabel = recorder.IsPaused ? "Continue Recording" : "Record";
+            toggleLabel = recorder.IsPaused ? "Continue Recording" : "Start Recording";
         }
 
         recordProp.boolValue = GUILayout.Toggle(recordProp.boolValue, toggleLabel, buttonStyle, height);
