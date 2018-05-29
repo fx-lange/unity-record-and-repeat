@@ -30,7 +30,7 @@ using RecordAndPlay;
 [CustomPropertyDrawer(typeof(RecordingBehaviour))]
 public class RecordingBehaviourDrawer : PropertyDrawer
 {
-    public static bool disableRecordingSwitch = false;
+    public static bool disableRecordingSwitch = true;
     
     public override float GetPropertyHeight (SerializedProperty property, GUIContent label)
     {
