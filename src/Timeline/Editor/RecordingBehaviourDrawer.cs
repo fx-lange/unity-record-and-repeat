@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 using RecordAndPlay;
 
 [CustomPropertyDrawer(typeof(RecordingBehaviour))]
-public class RecordingDrawer : PropertyDrawer
+public class RecordingBehaviourDrawer : PropertyDrawer
 {
     public static bool disableRecordingSwitch = false;
     
@@ -22,7 +22,7 @@ public class RecordingDrawer : PropertyDrawer
 
         Rect singleFieldRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
         
-        GUI.enabled = !(RecordingDrawer.disableRecordingSwitch && Application.isPlaying);
+        GUI.enabled = !(RecordingBehaviourDrawer.disableRecordingSwitch && Application.isPlaying);
         EditorGUI.PropertyField(singleFieldRect, recordingProp);
         GUI.enabled = true;
         
