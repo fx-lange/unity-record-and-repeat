@@ -20,11 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
+
 namespace RecordAndPlay
 {
     [System.Serializable]
     public class StringData : DataFrame
     {
         public string data;
+
+        public override string ToString()
+        {
+            return String.Format("Time: {0:N2} Data: {1}",time,data);
+        }
     }
 }
