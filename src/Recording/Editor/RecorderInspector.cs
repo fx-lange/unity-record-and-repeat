@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEditor;
 using RecordAndPlay;
@@ -118,9 +119,8 @@ public class RecorderInspector : Editor
                 
                 SerializedProperty nameProp = recordingSO.FindProperty("recordingName");
                 EditorGUILayout.PropertyField(nameProp);
-
-                SerializedProperty durationProp = recordingSO.FindProperty("duration");
-                EditorGUILayout.LabelField("Duration", durationProp.floatValue.ToString());
+                
+                EditorGUILayout.LabelField("Duration", String.Format("{0:N2}",recordingRef.duration));
                 
                 EditorGUILayout.LabelField("Frame Count", recordingRef.FrameCount().ToString());
 
