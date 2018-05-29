@@ -29,8 +29,9 @@ namespace RecordAndPlay
 {
     public abstract class Recording : ScriptableObject
     {
+        [HideInInspector]
         public string recordingName = "My Recording";
-        // [ReadOnly] TODO doesn't exist -> customproppertydrawer
+        [HideInInspector]
         public float duration = 0;
 
         private List<DataFrame> copiedDataFrames = null;
@@ -41,13 +42,9 @@ namespace RecordAndPlay
 
         public DataFrame GetFrameData(float timeS)
         {
-            UpdateStoredDataCopy(); //TODO probably not here but in a "prepare" method?
+            UpdateStoredDataCopy(); 
 
             DataFrame data = copiedDataFrames.FindLast(x => x.time <= timeS);
-            /* TODO performance: 
-            binary search would be faster O(log n) (or random access via fixed fps model O(1)) 
-            -> dataFrames.BinarySearch or SortedList.
-            */
             return data;
         }
 
