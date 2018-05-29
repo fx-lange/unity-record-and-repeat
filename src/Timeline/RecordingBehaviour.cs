@@ -15,12 +15,10 @@ namespace RecordAndPlay
         {
             if (watchReference == recording)
             {
-                Debug.LogWarning("RecordingChanged NOT");
                 return false;
             }
             else
             {
-                Debug.LogWarning("RecordingChanged YES");
                 watchReference = recording;
                 return true;
             }
