@@ -25,7 +25,6 @@ public class RecorderInspector : Editor
         cancelProp = serializedObject.FindProperty("doCancel");
         recordingProp = serializedObject.FindProperty("recording");
         responseProp = serializedObject.FindProperty("responseText");
-
     }
 
     public override void OnInspectorGUI()
