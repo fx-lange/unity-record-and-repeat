@@ -149,6 +149,7 @@ namespace RecordAndPlay
 
             AssetDatabase.CreateAsset(recording, assetPathAndName);
             responseText = String.Format("Recording stored under {0}.", assetPathAndName);
+            Debug.Log(responseText);
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
