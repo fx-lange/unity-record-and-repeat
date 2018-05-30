@@ -36,6 +36,8 @@ namespace RecordAndPlay
 
         //interface via inspector
         [HideInInspector]
+        public bool disableIfNotPlaying = true;
+        [HideInInspector]
         public bool doRecord = false;
         [HideInInspector]
         public bool doSave = false;
