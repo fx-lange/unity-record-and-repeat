@@ -64,7 +64,7 @@ public class RecorderInspector : Editor
         // disable gui outside play mode
         if (recorder.disableIfNotPlaying && !Application.isPlaying)
         {
-            GUI.enabled = false; 
+            GUI.enabled = false;
         }
 
         // record toggle
@@ -73,7 +73,10 @@ public class RecorderInspector : Editor
         // recording group
         if (recorder.IsRecording)
         {
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             RecordingGroup();
+            EditorGUILayout.EndVertical();
+            
             Repaint(); // drawn 10 times per second
         }
 
@@ -111,9 +114,11 @@ public class RecorderInspector : Editor
     {
         Recorder recorder = target as Recorder;
 
+        Color defaultColor = GUI.backgroundColor;
         string toggleLabel;
         if (recordProp.boolValue)
         {
+            GUI.backgroundColor = Color.red;
             toggleLabel = "Recording";
         }
         else
@@ -122,6 +127,9 @@ public class RecorderInspector : Editor
         }
 
         recordProp.boolValue = GUILayout.Toggle(recordProp.boolValue, toggleLabel, buttonStyle, height);
+
+        //reset background color
+        GUI.backgroundColor = defaultColor;
 
         if (!GUI.enabled)
         {
