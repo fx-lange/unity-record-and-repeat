@@ -34,6 +34,8 @@ public class RecordingClipInspector : Editor
 
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
+        
         SerializedProperty templateProp = serializedObject.FindProperty("template");
         SerializedProperty recordingProp = templateProp.FindPropertyRelative("recording");
 
@@ -53,5 +55,7 @@ public class RecordingClipInspector : Editor
 
             EditorGUILayout.EndVertical();
         }
+        
+        serializedObject.ApplyModifiedProperties();
     }
 }
