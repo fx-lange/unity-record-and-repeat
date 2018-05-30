@@ -32,18 +32,10 @@ public class RecordingClipInspector : Editor
 {
     public static bool disableRecordingSwitch = true;
 
-    // public override float GetPropertyHeight (SerializedProperty property, GUIContent label)
-    // {
-    //     int fieldCount = 0;
-    //     return fieldCount * EditorGUIUtility.singleLineHeight;
-    // }
-
     public override void OnInspectorGUI()
     {
         SerializedProperty templateProp = serializedObject.FindProperty("template");
         SerializedProperty recordingProp = templateProp.FindPropertyRelative("recording");
-
-        // Rect singleFieldRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
 
         GUI.enabled = !(RecordingClipInspector.disableRecordingSwitch && Application.isPlaying);
         EditorGUILayout.PropertyField(recordingProp);
@@ -54,13 +46,9 @@ public class RecordingClipInspector : Editor
         {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
-            // singleFieldRect.y += EditorGUIUtility.singleLineHeight;
             EditorGUILayout.LabelField("Recording Name", recordingRef.name);
-
-            // singleFieldRect.y += EditorGUIUtility.singleLineHeight;
+            EditorGUILayout.LabelField("Type",recordingRef.GetType().Name);
             EditorGUILayout.LabelField("Duration", String.Format("{0:N2}", recordingRef.duration));
-
-            // singleFieldRect.y += EditorGUIUtility.singleLineHeight;
             EditorGUILayout.LabelField("Frame Count", recordingRef.FrameCount().ToString());
 
             EditorGUILayout.EndVertical();
