@@ -150,14 +150,14 @@ public class RecorderInspector : Editor
             SerializedObject recordingSO = new SerializedObject(recordingRef);
             if (recordingSO != null)
             {
-                EditorGUILayout.LabelField("Destination Folder", recorder.DestinationFolder);
-
                 SerializedProperty nameProp = recordingSO.FindProperty("recordingName");
                 EditorGUILayout.PropertyField(nameProp);
 
+                EditorGUILayout.LabelField("Type",recordingRef.GetType().Name);
                 EditorGUILayout.LabelField("Duration", String.Format("{0:N2}", recordingRef.duration));
 
                 EditorGUILayout.LabelField("Frame Count", recordingRef.FrameCount().ToString());
+                EditorGUILayout.LabelField("Destination Folder", recorder.DestinationFolder);
 
                 recordingSO.ApplyModifiedPropertiesWithoutUndo();
             }

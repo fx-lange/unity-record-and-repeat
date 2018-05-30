@@ -28,35 +28,37 @@ using RecordAndPlay;
 [CustomEditor(typeof(Recording), true)]
 public class RecordingInspector : Editor
 {
-    GUIStyle buttonStyle;
-    GUILayoutOption height;
-
     public override void OnInspectorGUI()
     {
-        buttonStyle = EditorStyles.miniButtonMid;
-        height = GUILayout.Height(20);
-
         serializedObject.Update();
-        
+
         Recording recording = target as Recording;
 
-        // EditorGUILayout.PropertyField(nameProp);
+        EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+
+        // recording details as labels
         EditorGUILayout.LabelField("Recording Name", recording.name);
-        EditorGUILayout.LabelField("Duration", String.Format("{0:N2}",recording.duration));
-        EditorGUILayout.LabelField("Frame Count",recording.FrameCount().ToString());
+        EditorGUILayout.LabelField("Type",recording.GetType().Name);
+        EditorGUILayout.LabelField("Duration", String.Format("{0:N2}", recording.duration));
+        EditorGUILayout.LabelField("Frame Count", recording.FrameCount().ToString());
+
+        EditorGUILayout.EndVertical();
+        EditorGUILayout.Space();
+
+        // button to log all data frames
+        if (GUILayout.Button("Log Data Frames", EditorStyles.miniButtonMid, GUILayout.Height(20)))
+        {
+            recording.Log();
+        }
         
+        EditorGUILayout.Space();
+
         // show data fields
         SerializedProperty field = serializedObject.GetIterator();
         field.NextVisible(true);
         while (field.NextVisible(false))
         {
-            EditorGUILayout.PropertyField(field,true);
-        }
-        
-        EditorGUILayout.Space();
-        if (GUILayout.Button("Log Data", buttonStyle, height))
-        {
-            recording.Log();
+            EditorGUILayout.PropertyField(field, true);
         }
 
         serializedObject.ApplyModifiedPropertiesWithoutUndo();
