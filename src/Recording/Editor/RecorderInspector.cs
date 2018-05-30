@@ -62,9 +62,9 @@ public class RecorderInspector : Editor
         EditorGUILayout.Space();
 
         // disable gui outside play mode
-        if (!Application.isPlaying)
+        if (recorder.disableIfNotPlaying && !Application.isPlaying)
         {
-            GUI.enabled = false;
+            GUI.enabled = false; 
         }
 
         // record toggle
@@ -74,7 +74,7 @@ public class RecorderInspector : Editor
         if (recorder.IsRecording)
         {
             RecordingGroup();
-            Repaint(); //maybe not everyframe but every second?
+            Repaint(); // drawn 10 times per second
         }
 
         //only enable save/cancel during recording
@@ -122,12 +122,18 @@ public class RecorderInspector : Editor
         }
 
         recordProp.boolValue = GUILayout.Toggle(recordProp.boolValue, toggleLabel, buttonStyle, height);
+
+        if (!GUI.enabled)
+        {
+            GUI.enabled = true;
+            EditorGUILayout.HelpBox("For this Recorder recording is disabled while Application is not playing.", MessageType.Info);
+        }
     }
 
     private void RecordingGroup()
     {
         Recorder recorder = target as Recorder;
-        
+
         showFeedback = false;
 
         Recording recordingRef = recordingProp.objectReferenceValue as Recording;
@@ -136,13 +142,13 @@ public class RecorderInspector : Editor
             SerializedObject recordingSO = new SerializedObject(recordingRef);
             if (recordingSO != null)
             {
-                EditorGUILayout.LabelField("Destination Folder",recorder.DestinationFolder);
-                
+                EditorGUILayout.LabelField("Destination Folder", recorder.DestinationFolder);
+
                 SerializedProperty nameProp = recordingSO.FindProperty("recordingName");
                 EditorGUILayout.PropertyField(nameProp);
-                
-                EditorGUILayout.LabelField("Duration", String.Format("{0:N2}",recordingRef.duration));
-                
+
+                EditorGUILayout.LabelField("Duration", String.Format("{0:N2}", recordingRef.duration));
+
                 EditorGUILayout.LabelField("Frame Count", recordingRef.FrameCount().ToString());
 
                 recordingSO.ApplyModifiedPropertiesWithoutUndo();
