@@ -9,8 +9,8 @@ namespace RecordAndPlay
     public class RecordingBehaviour : PlayableBehaviour
     {
         public Recording recording;
-
-        private Recording watchReference = null;
+        [HideInInspector]
+        public Recording watchReference = null;
         public bool RecordingChanged()
         {
             if (watchReference == recording)
@@ -22,6 +22,11 @@ namespace RecordAndPlay
                 watchReference = recording;
                 return true;
             }
+        }
+
+        public void CleanClone(RecordingBehaviour other)
+        {
+            watchReference = other.watchReference;
         }
 
         // public override void OnGraphStart(Playable playable)
