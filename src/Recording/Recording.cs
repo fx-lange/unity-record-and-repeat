@@ -35,14 +35,22 @@ namespace RecordAndPlay
         public float duration = 0;
 
         private List<DataFrame> copiedDataFrames = null;
+        public List<DataFrame> DataFrames
+        {
+            get
+            {
+                UpdateStoredDataCopy();
+                return copiedDataFrames;
+            }
+        }
 
         public abstract void Add(DataFrame data);
-        protected abstract IEnumerable<DataFrame> GetDataFrames();
         public abstract int FrameCount();
+        protected abstract IEnumerable<DataFrame> GetDataFrames();
 
         public DataFrame GetFrameData(float timeS)
         {
-            UpdateStoredDataCopy(); 
+            UpdateStoredDataCopy();
 
             DataFrame data = copiedDataFrames.FindLast(x => x.time <= timeS);
             return data;
