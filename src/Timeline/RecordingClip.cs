@@ -12,7 +12,7 @@ namespace RecordAndPlay
 
         public ClipCaps clipCaps
         {
-            get { return ClipCaps.Looping | ClipCaps.ClipIn; }
+            get { return ClipCaps.Looping | ClipCaps.ClipIn | ClipCaps.SpeedMultiplier; }
         }
 
         public override double duration
