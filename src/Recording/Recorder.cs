@@ -132,6 +132,7 @@ namespace RecordAndPlay
 
         void SaveRecording()
         {
+#if UNITY_EDITOR
             if (recording == null || recording.duration <= 0)
             {
                 responseText = "Nothing recorded yet, can't save Recording.";
@@ -155,6 +156,7 @@ namespace RecordAndPlay
             AssetDatabase.Refresh();
 
             ResetRecorder();
+#endif
         }
 
         private void ResetRecorder()
