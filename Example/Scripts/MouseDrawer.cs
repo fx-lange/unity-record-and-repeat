@@ -29,12 +29,12 @@ using RecordAndPlay;
 public class MouseDrawer : DataListener
 {
 
-    private MouseRecorder.MouseData mouseData = new MouseRecorder.MouseData();
+    private MouseData mouseData = new MouseData();
 
     public override void ProcessData(DataFrame results)
     {
         StringData stringData = results as StringData;
-        mouseData = JsonUtility.FromJson<MouseRecorder.MouseData>(stringData.data);
+        mouseData = JsonUtility.FromJson<MouseData>(stringData.data);
     }
 
     void OnDrawGizmos()

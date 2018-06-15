@@ -29,14 +29,6 @@ using RecordAndPlay;
 //record mouse position as world coordinates
 public class MouseRecorder : StringRecorder
 {
-    
-    [System.Serializable]
-    public class MouseData
-    {
-        public Vector3 worldPos;
-        public bool pressed;
-    }
-    
     private MouseData mouseData = new MouseData();
 
     protected new void Update()
