@@ -30,8 +30,6 @@ namespace RecordAndPlay
     public abstract class Recording : ScriptableObject
     {
         [HideInInspector]
-        public string recordingName = "My Recording";
-        [HideInInspector]
         public float duration = 0;
 
         private List<DataFrame> copiedDataFrames = null;
@@ -60,7 +58,7 @@ namespace RecordAndPlay
         {
             UpdateStoredDataCopy();
 
-            Debug.Log(String.Format("{0} {1} seconds {2} samples", recordingName, duration, copiedDataFrames.Count));
+            Debug.Log(String.Format("{0} - {1} seconds - {2} samples", name, duration, copiedDataFrames.Count));
             copiedDataFrames.ForEach(frame => Debug.Log(frame));
         }
 

@@ -49,9 +49,14 @@ namespace RecordAndPlay
         private float pauseStartTimeSec;
         private bool isRecording = false;
         private bool isPaused = false;
+        
         [SerializeField]
         [HideInInspector]
         private Recording recording = null;
+        
+        [SerializeField]
+        [HideInInspector]
+        protected string recordingName = "New Recording";
 
         [SerializeField]
         [HideInInspector]
@@ -101,7 +106,6 @@ namespace RecordAndPlay
         void StartRecording()
         {
             recording = CreateInstance();
-            recording.recordingName = "recording";
 
             startTimeSec = Time.realtimeSinceStartup;
             isRecording = true;
@@ -146,7 +150,8 @@ namespace RecordAndPlay
                 AssetDatabase.CreateFolder("Assets", recordingsPath);
             }
 
-            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + recording.recordingName + ".asset");
+            recordingName = recordingName.Trim() == "" ? "New Recording" : recordingName;
+            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + recordingName + ".asset");
 
             AssetDatabase.CreateAsset(recording, assetPathAndName);
             responseText = String.Format("Recording stored under {0}.", assetPathAndName);

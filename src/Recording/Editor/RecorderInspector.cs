@@ -33,6 +33,7 @@ public class RecorderInspector : Editor
     SerializedProperty cancelProp;
     SerializedProperty recordingProp;
     SerializedProperty responseProp;
+    SerializedProperty recordingNameProp;
 
     bool showFeedback = false;
 
@@ -47,6 +48,7 @@ public class RecorderInspector : Editor
         cancelProp = serializedObject.FindProperty("doCancel");
         recordingProp = serializedObject.FindProperty("recording");
         responseProp = serializedObject.FindProperty("responseText");
+        recordingNameProp = serializedObject.FindProperty("recordingName");
     }
 
     public override void OnInspectorGUI()
@@ -73,6 +75,8 @@ public class RecorderInspector : Editor
         // recording group
         if (recorder.IsRecording)
         {
+            showFeedback = false;
+            
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             RecordingGroup();
             EditorGUILayout.EndVertical();
@@ -142,25 +146,16 @@ public class RecorderInspector : Editor
     {
         Recorder recorder = target as Recorder;
 
-        showFeedback = false;
-
         Recording recordingRef = recordingProp.objectReferenceValue as Recording;
         if (recordingRef)
         {
-            SerializedObject recordingSO = new SerializedObject(recordingRef);
-            if (recordingSO != null)
-            {
-                SerializedProperty nameProp = recordingSO.FindProperty("recordingName");
-                EditorGUILayout.PropertyField(nameProp);
+            EditorGUILayout.PropertyField(recordingNameProp);
 
-                EditorGUILayout.LabelField("Type",recordingRef.GetType().Name);
-                EditorGUILayout.LabelField("Duration", String.Format("{0:N2}", recordingRef.duration));
+            EditorGUILayout.LabelField("Type",recordingRef.GetType().Name);
+            EditorGUILayout.LabelField("Duration", String.Format("{0:N2}", recordingRef.duration));
 
-                EditorGUILayout.LabelField("Frame Count", recordingRef.FrameCount().ToString());
-                EditorGUILayout.LabelField("Destination Folder", recorder.DestinationFolder);
-
-                recordingSO.ApplyModifiedPropertiesWithoutUndo();
-            }
+            EditorGUILayout.LabelField("Frame Count", recordingRef.FrameCount().ToString());
+            EditorGUILayout.LabelField("Destination Folder", recorder.DestinationFolder); 
         }
     }
 }
