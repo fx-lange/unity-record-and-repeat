@@ -66,6 +66,7 @@ public class RecorderInspector : Editor
         // disable gui outside play mode
         if (recorder.disableIfNotPlaying && !Application.isPlaying)
         {
+            EditorGUILayout.HelpBox("For this Recorder recording is disabled while Application is not playing.", MessageType.Info);
             GUI.enabled = false;
         }
 
@@ -73,14 +74,12 @@ public class RecorderInspector : Editor
         RecordToggle();
 
         // recording group
+        RecordingGroup();
+
         if (recorder.IsRecording)
         {
             showFeedback = false;
-            
-            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            RecordingGroup();
-            EditorGUILayout.EndVertical();
-            
+
             Repaint(); // drawn 10 times per second
         }
 
@@ -134,12 +133,6 @@ public class RecorderInspector : Editor
 
         //reset background color
         GUI.backgroundColor = defaultColor;
-
-        if (!GUI.enabled)
-        {
-            GUI.enabled = true;
-            EditorGUILayout.HelpBox("For this Recorder recording is disabled while Application is not playing.", MessageType.Info);
-        }
     }
 
     private void RecordingGroup()
@@ -147,15 +140,27 @@ public class RecorderInspector : Editor
         Recorder recorder = target as Recorder;
 
         Recording recordingRef = recordingProp.objectReferenceValue as Recording;
+
+        string type = "-";
+        string duration = "-";
+        string frameCount = "0";
+
         if (recordingRef)
         {
-            EditorGUILayout.PropertyField(recordingNameProp);
-
-            EditorGUILayout.LabelField("Type",recordingRef.GetType().Name);
-            EditorGUILayout.LabelField("Duration", String.Format("{0:N2}", recordingRef.duration));
-
-            EditorGUILayout.LabelField("Frame Count", recordingRef.FrameCount().ToString());
-            EditorGUILayout.LabelField("Destination Folder", recorder.DestinationFolder); 
+            type = recordingRef.GetType().Name;
+            duration = String.Format("{0:N2}", recordingRef.duration);
+            frameCount = recordingRef.FrameCount().ToString();
         }
+
+        EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+        EditorGUILayout.PropertyField(recordingNameProp);
+
+        EditorGUILayout.LabelField("Type", type);
+        EditorGUILayout.LabelField("Duration", duration);
+        EditorGUILayout.LabelField("Frame Count", frameCount);
+
+        EditorGUILayout.LabelField("Destination Folder", recorder.DestinationFolder);
+
+        EditorGUILayout.EndVertical();
     }
 }
