@@ -47,13 +47,13 @@ namespace RecordAndPlay
         //private members
         private float startTimeSec;
         private float pauseStartTimeSec;
-        private bool isRecording = false;
+        private bool isRecordingStarted = false;
         private bool isPaused = false;
-        
+
         [SerializeField]
         [HideInInspector]
         private Recording recording = null;
-        
+
         [SerializeField]
         [HideInInspector]
         protected string recordingName = "New Recording";
@@ -63,8 +63,9 @@ namespace RecordAndPlay
         private string responseText;
 
         //properties
-        public bool IsRecording { get { return isRecording; } }
+        public bool IsRecording { get { return isRecordingStarted && !isPaused; } }
         public bool IsPaused { get { return isPaused; } }
+        public bool IsRecordingStarted { get { return isRecordingStarted; } }
         public string DestinationFolder
         {
             get { return String.Format("Assets/{0}", recordingsPath); }
@@ -80,15 +81,15 @@ namespace RecordAndPlay
 
         protected void Update()
         {
-            if (!isRecording && doRecord)
+            if (!isRecordingStarted && doRecord)
             {
                 StartRecording();
             }
-            else if (isRecording && !isPaused && !doRecord)
+            else if (IsRecording && !doRecord)
             {
                 PauseRecording();
             }
-            else if (isRecording && isPaused && doRecord)
+            else if (isRecordingStarted && isPaused && doRecord)
             {
                 ContinueRecording();
             }
@@ -108,7 +109,7 @@ namespace RecordAndPlay
             recording = CreateInstance();
 
             startTimeSec = Time.realtimeSinceStartup;
-            isRecording = true;
+            isRecordingStarted = true;
             isPaused = false;
         }
 
@@ -166,14 +167,14 @@ namespace RecordAndPlay
 
         private void ResetRecorder()
         {
-            isPaused = isRecording = false;
+            isPaused = isRecordingStarted = false;
             doCancel = doSave = doRecord = false;
             recording = null;
         }
 
         protected void RecordData(DataFrame dataFrame)
         {
-            if (!isRecording || isPaused)
+            if (!IsRecording)
             {
                 return;
             }

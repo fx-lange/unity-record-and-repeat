@@ -41,7 +41,7 @@ public class MouseRecorder : StringRecorder
         mouseData.worldPos = Camera.main.ScreenToWorldPoint(mouse);
         mouseData.pressed = Input.GetMouseButton(0);
 
-        if (IsRecording && !IsPaused)
+        if (IsRecording)
         {
             string json = JsonUtility.ToJson(mouseData);
             Debug.Log(json);
@@ -51,7 +51,7 @@ public class MouseRecorder : StringRecorder
 
     void OnDrawGizmos()
     {
-        if (IsRecording && !IsPaused)
+        if (IsRecording)
         {
             Gizmos.color = Color.red;
         }

@@ -14,7 +14,7 @@ namespace RecordAndPlay
 
             if (trackBinding == null)
             {
-                Debug.LogWarning("Track without Trackbinding");
+                Debug.Log("Track without Trackbinding");
                 return;
             }
 

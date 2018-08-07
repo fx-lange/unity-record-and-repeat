@@ -83,8 +83,8 @@ public class RecorderInspector : Editor
             Repaint(); // drawn 10 times per second
         }
 
-        //only enable save/cancel during recording
-        GUI.enabled = GUI.enabled && recorder.IsRecording;
+        //only enable save/cancel if recording has been started
+        GUI.enabled = GUI.enabled && recorder.IsRecordingStarted;
 
         // save button
         if (GUILayout.Button("Save Recording", buttonStyle, height))
