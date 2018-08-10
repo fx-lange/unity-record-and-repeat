@@ -42,7 +42,7 @@ public class HeadRecorder : StringRecorder
             forward = t.forward;
         }
         
-        public void Draw(float radius, float rayLength)
+        public void DebugDraw(float radius, float rayLength)
         {
             Gizmos.DrawWireSphere(worldPos, radius);
 

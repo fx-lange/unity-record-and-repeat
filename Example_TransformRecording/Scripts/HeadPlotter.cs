@@ -47,7 +47,7 @@ public class HeadPlotter : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        
+        //loop recordings
         foreach(ColoredRecording coloredRec in recordings)
         {
             Recording recording = coloredRec.recording;
@@ -67,7 +67,7 @@ public class HeadPlotter : MonoBehaviour
 
                 //draw head
                 Gizmos.color = coloredRec.color;
-                head.Draw(radius, rayLength);
+                head.DebugDraw(radius, rayLength);
 
                 //draw connection between heads
                 if (lastFrame != null)

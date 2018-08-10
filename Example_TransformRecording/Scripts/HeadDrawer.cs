@@ -48,6 +48,6 @@ public class HeadDrawer : DataListener
         }
 
         Gizmos.color = color;
-        head.Draw(radius, rayLength);
+        head.DebugDraw(radius, rayLength);
     }
 }
