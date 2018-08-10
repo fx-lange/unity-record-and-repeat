@@ -32,7 +32,7 @@ public class HeadPlotter : MonoBehaviour
     [System.Serializable]
     public class ColoredRecording
     {
-        public Recording recording = null;
+        public HeadRecording recording = null;
         public Color color = Color.white;
     }
 
@@ -60,10 +60,7 @@ public class HeadPlotter : MonoBehaviour
             HeadRecorder.Head lastFrame = null;
             foreach(DataFrame frame in recording.DataFrames)
             {
-
-                //parse data
-                StringData stringData = frame as StringData;
-                HeadRecorder.Head head = JsonUtility.FromJson<HeadRecorder.Head>(stringData.data);
+                HeadRecorder.Head head = frame as HeadRecorder.Head;
 
                 //draw head
                 Gizmos.color = coloredRec.color;

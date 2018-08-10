@@ -36,8 +36,7 @@ public class HeadDrawer : DataListener
 
     public override void ProcessData(DataFrame results)
     {
-        StringData stringData = results as StringData;
-        head = JsonUtility.FromJson<HeadRecorder.Head>(stringData.data);
+        head = results as HeadRecorder.Head;
     }
 
     void OnDrawGizmos()

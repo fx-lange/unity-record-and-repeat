@@ -26,22 +26,22 @@ using UnityEngine;
 
 using RecordAndPlay;
 
-public class HeadRecorder : StringRecorder
+public class HeadRecorder : Recorder
 {
 
     [System.Serializable]
-    public class Head
+    public class Head : DataFrame
     {
         public Vector3 worldPos;
         public Vector3 forward;
-        
-        public Head(){}
+
+        public Head() { }
         public Head(Transform t)
         {
             worldPos = t.position;
             forward = t.forward;
         }
-        
+
         public void DebugDraw(float radius, float rayLength)
         {
             Gizmos.DrawWireSphere(worldPos, radius);
@@ -52,6 +52,10 @@ public class HeadRecorder : StringRecorder
         }
     }
 
+    protected override Recording CreateInstance()
+    {
+        return ScriptableObject.CreateInstance<HeadRecording>();
+    }
 
     protected new void Update()
     {
@@ -60,10 +64,7 @@ public class HeadRecorder : StringRecorder
         if (IsRecording)
         {
             Head head = new Head(transform);
-
-            string json = JsonUtility.ToJson(head);
-            Debug.Log(json);
-            RecordData(json);
+            RecordData(head);
         }
     }
 }
