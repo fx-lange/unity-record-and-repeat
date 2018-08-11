@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Walk : MonoBehaviour
 {
-    public float moveSpeed = 0.5f;
+    public float moveSpeed = 0.1f;
 	public float rotationSpeed = 5f;
 
     // Update is called once per frame
