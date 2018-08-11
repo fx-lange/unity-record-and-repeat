@@ -4,11 +4,11 @@ This work in progress plugin for Unity supports recording and playback of custom
 
 Using recorded rather than live data can drastically smoothen the development process of your prototypes. It was originally developed for external, camera based tracking data (OpenPose) but can handle any kind of serializable data - in game or external.
 
-The core of this plugin are recordings stored as [ScriptableObjects](https://docs.unity3d.com/ScriptReference/ScriptableObject.html) which can be dragged&dropped into Timeline Clips. 
+The core of this plugin are recordings stored as [ScriptableObjects](https://docs.unity3d.com/ScriptReference/ScriptableObject.html) which can be dragged&dropped into Timeline Clips.
 
 ![MouseRecordingPlot](https://github.com/fx-lange/unity-record-and-play/blob/master/Docs/MouseRecordingPlot.png)
 
-To account for the technical limitations of serialization the architecture is based on several abstract classes which need to be implemented fitting your data. However, the `StringData` implementation should help to get you started: Either use it as a reference or work with it directly. 
+To account for the technical limitations of serialization the architecture is based on several abstract classes which need to be implemented fitting your data. However, the `StringData` implementation should help to get you started: Either use it as a reference or work with it directly.
 
 ## Getting started
 
