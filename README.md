@@ -6,7 +6,7 @@ Using recorded rather than live data can drastically smoothen the development pr
 
 The core of this plugin are recordings stored as [ScriptableObjects](https://docs.unity3d.com/ScriptReference/ScriptableObject.html) which can be dragged&dropped into Timeline Clips. 
 
-![MouseRecordingPlot](https://github.com/fx-lange/unity-record-and-play/blob/master/MouseRecordingPlot.png)
+![MouseRecordingPlot](https://github.com/fx-lange/unity-record-and-play/blob/master/Docs/MouseRecordingPlot.png)
 
 To account for the technical limitations of serialization the architecture is based on several abstract classes which need to be implemented fitting your data. However, the `StringData` implementation should help to get you started: Either use it as a reference or work with it directly. 
 
