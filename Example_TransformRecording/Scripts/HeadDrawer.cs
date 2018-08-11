@@ -32,12 +32,12 @@ public class HeadDrawer : DataListener
     public float radius = 0.5f;
     public float rayLength = 0.1f;
 
-    private HeadRecorder.Head head = null;
+    private HeadData head = null;
 
     public override void ProcessData(DataFrame results)
     {
         StringData stringData = results as StringData;
-        head = JsonUtility.FromJson<HeadRecorder.Head>(stringData.data);
+        head = JsonUtility.FromJson<HeadData>(stringData.data);
     }
 
     void OnDrawGizmos()

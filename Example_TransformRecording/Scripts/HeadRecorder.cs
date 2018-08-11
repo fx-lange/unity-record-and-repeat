@@ -28,30 +28,7 @@ using RecordAndPlay;
 
 public class HeadRecorder : StringRecorder
 {
-
-    [System.Serializable]
-    public class Head
-    {
-        public Vector3 worldPos;
-        public Vector3 forward;
-        
-        public Head(){}
-        public Head(Transform t)
-        {
-            worldPos = t.position;
-            forward = t.forward;
-        }
-        
-        public void DebugDraw(float radius, float rayLength)
-        {
-            Gizmos.DrawWireSphere(worldPos, radius);
-
-            Vector3 from = worldPos;
-            Vector3 to = from + forward * rayLength;
-            Gizmos.DrawLine(from, to);
-        }
-    }
-
+    public Transform headTransform;
 
     protected new void Update()
     {
@@ -59,7 +36,13 @@ public class HeadRecorder : StringRecorder
 
         if (IsRecording)
         {
-            Head head = new Head(transform);
+            if (headTransform == null)
+            {
+                Debug.LogWarning("No transform target set!");
+                return;
+            }
+            
+            HeadData head = new HeadData(headTransform);
 
             string json = JsonUtility.ToJson(head);
             Debug.Log(json);

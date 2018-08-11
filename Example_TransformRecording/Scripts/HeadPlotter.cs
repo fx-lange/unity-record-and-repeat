@@ -57,13 +57,13 @@ public class HeadPlotter : MonoBehaviour
             }
 
             //draw colored recording
-            HeadRecorder.Head lastFrame = null;
+            HeadData lastFrame = null;
             foreach(DataFrame frame in recording.DataFrames)
             {
 
                 //parse data
                 StringData stringData = frame as StringData;
-                HeadRecorder.Head head = JsonUtility.FromJson<HeadRecorder.Head>(stringData.data);
+                HeadData head = JsonUtility.FromJson<HeadData>(stringData.data);
 
                 //draw head
                 Gizmos.color = coloredRec.color;
