@@ -26,28 +26,39 @@ using UnityEngine;
 
 using RecordAndPlay;
 
-public class HeadDrawer : DataListener
+public class HeadPlayback : DataListener
 {
+    public Transform head;
+
+    [Header("DebugDraw")]
     public Color color;
     public float radius = 0.5f;
     public float rayLength = 0.1f;
 
-    private HeadData head = null;
+    private HeadData headData = null;
 
     public override void ProcessData(DataFrame results)
     {
         StringData stringData = results as StringData;
-        head = JsonUtility.FromJson<HeadData>(stringData.data);
+        headData = JsonUtility.FromJson<HeadData>(stringData.data);
+
+        if (head != null)
+        {
+            Transform parent = head.parent;
+            Vector3 headOffset = head.position - parent.position;
+            parent.position = headData.worldPos - headOffset;
+            parent.rotation = Quaternion.LookRotation(headData.forward);
+        }
     }
 
     void OnDrawGizmos()
     {
-        if (head == null)
+        if (headData == null)
         {
             return;
         }
 
         Gizmos.color = color;
-        head.DebugDraw(radius, rayLength);
+        headData.DebugDraw(radius, rayLength);
     }
 }
