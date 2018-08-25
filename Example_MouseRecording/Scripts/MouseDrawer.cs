@@ -33,8 +33,8 @@ public class MouseDrawer : DataListener
 
     public override void ProcessData(DataFrame results)
     {
-        StringData stringData = results as StringData;
-        mouseData = JsonUtility.FromJson<MouseData>(stringData.data);
+        StringDataFrame jsonFrame = results as StringDataFrame;
+        mouseData = jsonFrame.ParseFromJson<MouseData>();
     }
 
     void OnDrawGizmos()

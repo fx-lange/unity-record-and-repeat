@@ -33,12 +33,17 @@ namespace RecordAndPlay
             return ScriptableObject.CreateInstance<StringRecording>();
         }
 
-        public void RecordData(string data)
+        public void RecordAsJson(object obj)
         {
-            StringData stringData = new StringData();
-            stringData.data = data;
+            RecordString(JsonUtility.ToJson(obj));
+        }
 
-            RecordData(stringData);
+        public void RecordString(string data)
+        {
+            StringDataFrame frame = new StringDataFrame();
+            frame.Data = data;
+
+            RecordData(frame);
         }
     }
 }

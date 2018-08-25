@@ -42,11 +42,8 @@ public class HeadRecorder : StringRecorder
                 return;
             }
             
-            HeadData head = new HeadData(headTransform);
-
-            string json = JsonUtility.ToJson(head);
-            Debug.Log(json);
-            RecordData(json);
+            HeadData headData = new HeadData(headTransform);
+            RecordAsJson(headData);
         }
     }
 }
