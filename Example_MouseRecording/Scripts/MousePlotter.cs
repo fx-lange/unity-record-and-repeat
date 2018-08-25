@@ -38,8 +38,8 @@ public class MousePlotter : MonoBehaviour
         {
             foreach (DataFrame frame in recording.DataFrames)
             {
-                StringData stringData = frame as StringData;
-                MouseData mouseData = JsonUtility.FromJson<MouseData>(stringData.data);
+                StringDataFrame jsonFrame = frame as StringDataFrame;
+                MouseData mouseData = jsonFrame.ParseFromJson<MouseData>();
 
                 float radius;
                 if (mouseData.pressed)

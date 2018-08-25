@@ -39,13 +39,14 @@ public class HeadPlayback : DataListener
 
     public override void ProcessData(DataFrame results)
     {
-        StringData stringData = results as StringData;
-        headData = JsonUtility.FromJson<HeadData>(stringData.data);
-
+        StringDataFrame jsonFrame = results as StringDataFrame;
+        headData = jsonFrame.ParseFromJson<HeadData>();
+        
         if (head != null)
         {
             Transform parent = head.parent;
             Vector3 headOffset = head.position - parent.position;
+        
             parent.position = headData.worldPos - headOffset;
             parent.rotation = Quaternion.LookRotation(headData.forward);
         }

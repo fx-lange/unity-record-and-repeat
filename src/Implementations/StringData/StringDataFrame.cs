@@ -20,30 +20,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using System.Linq;
 
 namespace RecordAndPlay
 {
-    public class StringRecording : Recording
+    [System.Serializable]
+    public class StringDataFrame : DataFrame
     {
         [SerializeField]
-        private List<StringData> dataFrames = new List<StringData>();
-
-        public override void Add(DataFrame data)
+        private string data;
+        
+        public string Data
         {
-            dataFrames.Add((StringData)data);
+            get { return data; }
+            set { data = value; }
         }
 
-        protected override IEnumerable<DataFrame> GetDataFrames()
+        public T ParseFromJson<T>()
         {
-            return dataFrames.Cast<DataFrame>();
+            return JsonUtility.FromJson<T>(data);
         }
 
-        public override int FrameCount()
+        public override string ToString()
         {
-            return dataFrames.Count();
+            return String.Format("Time: {0:N2} Data: {1}", time, data);
         }
     }
 }

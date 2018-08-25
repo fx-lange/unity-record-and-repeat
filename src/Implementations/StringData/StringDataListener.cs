@@ -27,7 +27,7 @@ public class StringDataListener : DataListener
 {
     public override void ProcessData(DataFrame results)
     {
-        StringData stringData = results as StringData;
-        Debug.Log(stringData.ToString());
+        StringDataFrame frame = results as StringDataFrame;
+        Debug.Log(frame.ToString());
     }
 }

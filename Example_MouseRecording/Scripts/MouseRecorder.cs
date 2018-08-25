@@ -43,9 +43,7 @@ public class MouseRecorder : StringRecorder
 
         if (IsRecording)
         {
-            string json = JsonUtility.ToJson(mouseData);
-            Debug.Log(json);
-            RecordData(json);
+            RecordAsJson(mouseData);
         }
     }
 
