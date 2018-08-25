@@ -62,20 +62,20 @@ public class HeadPlotter : MonoBehaviour
             {
 
                 //parse data
-                StringData stringData = frame as StringData;
-                HeadData head = JsonUtility.FromJson<HeadData>(stringData.data);
+                StringDataFrame jsonFrame = frame as StringDataFrame;
+                HeadData headData = jsonFrame.ParseFromJson<HeadData>();
 
                 //draw head
                 Gizmos.color = coloredRec.color;
-                head.DebugDraw(radius, rayLength);
+                headData.DebugDraw(radius, rayLength);
 
                 //draw connection between heads
                 if (lastFrame != null)
                 {
                     SetGizmoAlpha(connectionAlpha);
-                    Gizmos.DrawLine(lastFrame.worldPos, head.worldPos);
+                    Gizmos.DrawLine(lastFrame.worldPos, headData.worldPos);
                 }
-                lastFrame = head;
+                lastFrame = headData;
             }
         }
     }
