@@ -41,12 +41,12 @@ public class HeadPlayback : DataListener
     {
         Record jsonRecord = record as Record;
         headData = jsonRecord.ParseFromJson<HeadData>();
-        
+
         if (playbackTarget != null)
         {
             Transform parent = playbackTarget.parent;
             Vector3 headOffset = playbackTarget.position - parent.position;
-        
+
             parent.position = headData.worldPos - headOffset;
             parent.rotation = Quaternion.LookRotation(headData.forward);
         }
