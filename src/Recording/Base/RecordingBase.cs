@@ -32,25 +32,25 @@ namespace RecordAndPlay
         [HideInInspector]
         public float duration = 0;
 
-        private List<DataFrame> copiedDataFrames = null;
-        public List<DataFrame> DataFrames
+        private List<IRecord> copiedRecords = null;
+        public List<IRecord> Records
         {
             get
             {
                 UpdateStoredDataCopy();
-                return copiedDataFrames;
+                return copiedRecords;
             }
         }
 
-        public abstract void Add(DataFrame data);
-        public abstract int FrameCount();
-        protected abstract IEnumerable<DataFrame> GetDataFrames();
+        public abstract void Add(IRecord data);
+        public abstract int Count();
+        protected abstract IEnumerable<IRecord> GetRecords();
 
-        public DataFrame GetFrameData(float timeS)
+        public IRecord GetRecord(float timeS)
         {
             UpdateStoredDataCopy();
 
-            DataFrame data = copiedDataFrames.FindLast(x => x.time <= timeS);
+            IRecord data = copiedRecords.FindLast(x => x.Time <= timeS);
             return data;
         }
 
@@ -58,16 +58,16 @@ namespace RecordAndPlay
         {
             UpdateStoredDataCopy();
 
-            Debug.Log(String.Format("{0} - {1} seconds - {2} samples", name, duration, copiedDataFrames.Count));
-            copiedDataFrames.ForEach(frame => Debug.Log(frame));
+            Debug.Log(String.Format("{0} - {1} seconds - {2} samples", name, duration, copiedRecords.Count));
+            copiedRecords.ForEach(record => Debug.Log(record));
         }
 
         private void UpdateStoredDataCopy()
         {
-            IEnumerable<DataFrame> frames = GetDataFrames();
-            if (copiedDataFrames == null || copiedDataFrames.Count != frames.Count())
+            IEnumerable<IRecord> records = GetRecords();
+            if (copiedRecords == null || copiedRecords.Count != records.Count())
             {
-                copiedDataFrames = frames.ToList();
+                copiedRecords = records.ToList();
             }
         }
     }

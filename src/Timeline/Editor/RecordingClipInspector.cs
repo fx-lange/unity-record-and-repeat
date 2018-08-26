@@ -51,7 +51,7 @@ public class RecordingClipInspector : Editor
             EditorGUILayout.LabelField("Recording Name", recordingRef.name);
             EditorGUILayout.LabelField("Type",recordingRef.GetType().Name);
             EditorGUILayout.LabelField("Duration", String.Format("{0:N2}", recordingRef.duration));
-            EditorGUILayout.LabelField("Frame Count", recordingRef.FrameCount().ToString());
+            EditorGUILayout.LabelField("Count", recordingRef.Count().ToString());
 
             EditorGUILayout.EndVertical();
         }

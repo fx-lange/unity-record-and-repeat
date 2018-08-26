@@ -26,7 +26,7 @@ using UnityEngine;
 namespace RecordAndPlay
 {
     [System.Serializable]
-    public class StringDataFrame : DataFrame
+    public class Record : RecordBase
     {
         [SerializeField]
         private string data;
@@ -44,7 +44,7 @@ namespace RecordAndPlay
 
         public override string ToString()
         {
-            return String.Format("Time: {0:N2} Data: {1}", time, data);
+            return String.Format("Time: {0:N2} Data: {1}", Time, data);
         }
     }
 }
