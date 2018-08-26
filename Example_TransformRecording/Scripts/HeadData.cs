@@ -29,14 +29,14 @@ public class HeadData
 {
     public Vector3 worldPos;
     public Vector3 forward;
-    
-    public HeadData(){}
+
+    public HeadData() { }
     public HeadData(Transform t)
     {
         worldPos = t.position;
         forward = t.forward;
     }
-    
+
     public void DebugDraw(float radius, float rayLength)
     {
         Gizmos.DrawWireSphere(worldPos, radius);

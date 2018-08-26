@@ -5,7 +5,7 @@ using UnityEngine;
 public class Walk : MonoBehaviour
 {
     public float moveSpeed = 0.1f;
-	public float rotationSpeed = 5f;
+    public float rotationSpeed = 5f;
 
     // Update is called once per frame
     void FixedUpdate()
@@ -18,14 +18,14 @@ public class Walk : MonoBehaviour
         {
             transform.position -= transform.forward * moveSpeed;
         }
-        
-		if (Input.GetKey("a"))
+
+        if (Input.GetKey("a"))
         {
-			transform.Rotate(new Vector3(0,-rotationSpeed,0));
+            transform.Rotate(new Vector3(0, -rotationSpeed, 0));
         }
         else if (Input.GetKey("d"))
         {
-			transform.Rotate(new Vector3(0,+rotationSpeed,0));
+            transform.Rotate(new Vector3(0, +rotationSpeed, 0));
         }
     }
 }
