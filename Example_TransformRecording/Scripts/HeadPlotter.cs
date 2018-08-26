@@ -37,7 +37,7 @@ public class HeadPlotter : MonoBehaviour
     }
 
     public List<ColoredRecording> recordings = new List<ColoredRecording>();
-    
+
     [Header("Size")]
     public float radius = 0.5f;
     public float rayLength = 0.1f;
@@ -48,22 +48,20 @@ public class HeadPlotter : MonoBehaviour
     void OnDrawGizmos()
     {
         //loop recordings
-        foreach(ColoredRecording coloredRec in recordings)
+        foreach (ColoredRecording coloredRec in recordings)
         {
             Recording recording = coloredRec.recording;
-            if(recording == null)
+            if (recording == null)
             {
                 continue;
             }
 
             //draw colored recording
             HeadData lastRecord = null;
-            foreach(IRecord record in recording.Records)
+            foreach (Record record in recording.Records)
             {
 
-                //parse data
-                Record jsonRecord = record as Record;
-                HeadData headData = jsonRecord.ParseFromJson<HeadData>();
+                HeadData headData = record.ParseFromJson<HeadData>();
 
                 //draw head
                 Gizmos.color = coloredRec.color;
