@@ -37,10 +37,10 @@ namespace RecordAndPlay
                         timeS = timeS % duration; //loop
                     }
                     
-                    DataFrame dataFrame = input.recording.GetFrameData(timeS);
-                    if (dataFrame != null)
+                    IRecord record = input.recording.GetRecord(timeS);
+                    if (record != null)
                     {
-                        trackBinding.ProcessData(dataFrame);
+                        trackBinding.ProcessData(record);
                     }
                 }
             }

@@ -184,17 +184,17 @@ namespace RecordAndPlay
             recording = null;
         }
 
-        protected void RecordData(DataFrame dataFrame)
+        protected void RecordData(IRecord record)
         {
             if (!IsRecording)
             {
                 return;
             }
 
-            dataFrame.time = Time.realtimeSinceStartup - startTimeSec;
+            record.Time = Time.realtimeSinceStartup - startTimeSec;
 
-            recording.duration = dataFrame.time; //always as long as the last data frame
-            recording.Add(dataFrame);
+            recording.duration = record.Time; //always as long as the last data frame
+            recording.Add(record);
         }
     }
 }

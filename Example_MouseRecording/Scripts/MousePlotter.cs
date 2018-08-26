@@ -30,16 +30,16 @@ public class MousePlotter : MonoBehaviour
 {
 
     public RecordingBase recording;
-	public float scaleRadius = 1f;
+    public float scaleRadius = 1f;
 
     void OnDrawGizmos()
     {
         if (recording != null)
         {
-            foreach (DataFrame frame in recording.DataFrames)
+            foreach (IRecord record in recording.Records)
             {
-                StringDataFrame jsonFrame = frame as StringDataFrame;
-                MouseData mouseData = jsonFrame.ParseFromJson<MouseData>();
+                Record jsonRecord = record as Record;
+                MouseData mouseData = jsonRecord.ParseFromJson<MouseData>();
 
                 float radius;
                 if (mouseData.pressed)

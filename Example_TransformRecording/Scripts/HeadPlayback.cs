@@ -37,10 +37,10 @@ public class HeadPlayback : DataListener
 
     private HeadData headData = null;
 
-    public override void ProcessData(DataFrame results)
+    public override void ProcessData(IRecord record)
     {
-        StringDataFrame jsonFrame = results as StringDataFrame;
-        headData = jsonFrame.ParseFromJson<HeadData>();
+        Record jsonRecord = record as Record;
+        headData = jsonRecord.ParseFromJson<HeadData>();
         
         if (playbackTarget != null)
         {

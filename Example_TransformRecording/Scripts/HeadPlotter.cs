@@ -57,25 +57,25 @@ public class HeadPlotter : MonoBehaviour
             }
 
             //draw colored recording
-            HeadData lastFrame = null;
-            foreach(DataFrame frame in recording.DataFrames)
+            HeadData lastRecord = null;
+            foreach(IRecord record in recording.Records)
             {
 
                 //parse data
-                StringDataFrame jsonFrame = frame as StringDataFrame;
-                HeadData headData = jsonFrame.ParseFromJson<HeadData>();
+                Record jsonRecord = record as Record;
+                HeadData headData = jsonRecord.ParseFromJson<HeadData>();
 
                 //draw head
                 Gizmos.color = coloredRec.color;
                 headData.DebugDraw(radius, rayLength);
 
                 //draw connection between heads
-                if (lastFrame != null)
+                if (lastRecord != null)
                 {
                     SetGizmoAlpha(connectionAlpha);
-                    Gizmos.DrawLine(lastFrame.worldPos, headData.worldPos);
+                    Gizmos.DrawLine(lastRecord.worldPos, headData.worldPos);
                 }
-                lastFrame = headData;
+                lastRecord = headData;
             }
         }
     }

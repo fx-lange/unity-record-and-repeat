@@ -40,13 +40,13 @@ public class RecordingInspector : Editor
         EditorGUILayout.LabelField("Recording Name", recording.name);
         EditorGUILayout.LabelField("Type",recording.GetType().Name);
         EditorGUILayout.LabelField("Duration", String.Format("{0:N2}", recording.duration));
-        EditorGUILayout.LabelField("Frame Count", recording.FrameCount().ToString());
+        EditorGUILayout.LabelField("Count", recording.Count().ToString());
 
         EditorGUILayout.EndVertical();
         EditorGUILayout.Space();
 
-        // button to log all data frames
-        if (GUILayout.Button("Log Data Frames", EditorStyles.miniButtonMid, GUILayout.Height(20)))
+        // button to log all data records
+        if (GUILayout.Button("Log Recording", EditorStyles.miniButtonMid, GUILayout.Height(20)))
         {
             recording.Log();
         }

@@ -22,9 +22,19 @@
 
 namespace RecordAndPlay
 {
-    [System.Serializable]
-    public abstract class DataFrame
+    public interface IRecord
     {
-        public float time;
+        float Time { get; set; }
+    }
+
+    [System.Serializable]
+    public abstract class RecordBase : IRecord
+    {
+        private float time;
+        public float Time
+        {
+            get { return time; }
+            set { time = value; }
+        }
     }
 }

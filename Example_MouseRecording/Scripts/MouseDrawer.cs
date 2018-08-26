@@ -31,10 +31,10 @@ public class MouseDrawer : DataListener
 
     private MouseData mouseData = new MouseData();
 
-    public override void ProcessData(DataFrame results)
+    public override void ProcessData(IRecord record)
     {
-        StringDataFrame jsonFrame = results as StringDataFrame;
-        mouseData = jsonFrame.ParseFromJson<MouseData>();
+        Record jsonRecord = record as Record;
+        mouseData = jsonRecord.ParseFromJson<MouseData>();
     }
 
     void OnDrawGizmos()

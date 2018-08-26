@@ -145,13 +145,13 @@ public class RecorderInspector : Editor
 
         string type = "-";
         string duration = "-";
-        string frameCount = "0";
+        string recordCount = "0";
 
         if (recordingRef)
         {
             type = recordingRef.GetType().Name;
             duration = String.Format("{0:N2}", recordingRef.duration);
-            frameCount = recordingRef.FrameCount().ToString();
+            recordCount = recordingRef.Count().ToString();
         }
 
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
@@ -159,7 +159,7 @@ public class RecorderInspector : Editor
 
         EditorGUILayout.LabelField("Type", type);
         EditorGUILayout.LabelField("Duration", duration);
-        EditorGUILayout.LabelField("Frame Count", frameCount);
+        EditorGUILayout.LabelField("Count", recordCount);
 
         EditorGUILayout.LabelField("Destination Folder", recorder.DestinationFolder);
 
