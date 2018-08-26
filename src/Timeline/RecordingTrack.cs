@@ -14,7 +14,7 @@ namespace RecordAndPlay
             foreach (var clip in GetClips())
             {
                 RecordingClip recordingClip = clip.asset as RecordingClip;
-                Recording recordingRef = recordingClip.template.recording;
+                RecordingBase recordingRef = recordingClip.template.recording;
                 if (recordingRef)
                 {
                     if (recordingClip.template.RecordingChanged())

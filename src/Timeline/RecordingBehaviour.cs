@@ -8,9 +8,9 @@ namespace RecordAndPlay
     [Serializable]
     public class RecordingBehaviour : PlayableBehaviour
     {
-        public Recording recording;
+        public RecordingBase recording;
         [HideInInspector]
-        public Recording watchReference = null;
+        public RecordingBase watchReference = null;
         public bool RecordingChanged()
         {
             if (watchReference == recording)

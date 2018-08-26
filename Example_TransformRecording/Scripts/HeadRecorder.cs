@@ -26,7 +26,7 @@ using UnityEngine;
 
 using RecordAndPlay;
 
-public class HeadRecorder : StringRecorder
+public class HeadRecorder : Recorder
 {
     public Transform headTransform;
 

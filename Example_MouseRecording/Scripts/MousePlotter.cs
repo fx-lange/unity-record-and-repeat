@@ -29,7 +29,7 @@ using RecordAndPlay;
 public class MousePlotter : MonoBehaviour
 {
 
-    public Recording recording;
+    public RecordingBase recording;
 	public float scaleRadius = 1f;
 
     void OnDrawGizmos()

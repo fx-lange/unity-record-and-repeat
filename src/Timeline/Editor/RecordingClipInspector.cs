@@ -43,7 +43,7 @@ public class RecordingClipInspector : Editor
         EditorGUILayout.PropertyField(recordingProp);
         GUI.enabled = true;
 
-        Recording recordingRef = recordingProp.objectReferenceValue as Recording;
+        RecordingBase recordingRef = recordingProp.objectReferenceValue as RecordingBase;
         if (recordingRef)
         {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
