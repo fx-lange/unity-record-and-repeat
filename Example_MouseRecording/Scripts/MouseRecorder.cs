@@ -27,7 +27,7 @@ using UnityEngine;
 using RecordAndPlay;
 
 //record mouse position as world coordinates
-public class MouseRecorder : StringRecorder
+public class MouseRecorder : Recorder
 {
     private MouseData mouseData = new MouseData();
     

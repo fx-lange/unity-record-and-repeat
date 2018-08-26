@@ -25,14 +25,14 @@ using UnityEngine;
 using UnityEditor;
 using RecordAndPlay;
 
-[CustomEditor(typeof(Recording), true)]
+[CustomEditor(typeof(RecordingBase), true)]
 public class RecordingInspector : Editor
 {
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
 
-        Recording recording = target as Recording;
+        RecordingBase recording = target as RecordingBase;
 
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 

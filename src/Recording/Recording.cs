@@ -1,4 +1,4 @@
-﻿// MIT License
+// MIT License
 
 // Copyright (c) 2018 Felix Lange 
 
@@ -20,55 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using UnityEngine;
-using System;
 using System.Collections.Generic;
+using UnityEngine;
 using System.Linq;
 
 namespace RecordAndPlay
 {
-    public abstract class Recording : ScriptableObject
+    public class Recording : RecordingBase
     {
-        [HideInInspector]
-        public float duration = 0;
+        [SerializeField]
+        private List<StringDataFrame> dataFrames = new List<StringDataFrame>();
 
-        private List<DataFrame> copiedDataFrames = null;
-        public List<DataFrame> DataFrames
+        public override void Add(DataFrame data)
         {
-            get
-            {
-                UpdateStoredDataCopy();
-                return copiedDataFrames;
-            }
+            dataFrames.Add((StringDataFrame)data);
         }
 
-        public abstract void Add(DataFrame data);
-        public abstract int FrameCount();
-        protected abstract IEnumerable<DataFrame> GetDataFrames();
-
-        public DataFrame GetFrameData(float timeS)
+        protected override IEnumerable<DataFrame> GetDataFrames()
         {
-            UpdateStoredDataCopy();
-
-            DataFrame data = copiedDataFrames.FindLast(x => x.time <= timeS);
-            return data;
+            return dataFrames.Cast<DataFrame>();
         }
 
-        public void Log()
+        public override int FrameCount()
         {
-            UpdateStoredDataCopy();
-
-            Debug.Log(String.Format("{0} - {1} seconds - {2} samples", name, duration, copiedDataFrames.Count));
-            copiedDataFrames.ForEach(frame => Debug.Log(frame));
-        }
-
-        private void UpdateStoredDataCopy()
-        {
-            IEnumerable<DataFrame> frames = GetDataFrames();
-            if (copiedDataFrames == null || copiedDataFrames.Count != frames.Count())
-            {
-                copiedDataFrames = frames.ToList();
-            }
+            return dataFrames.Count();
         }
     }
 }
