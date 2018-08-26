@@ -29,17 +29,16 @@ using RecordAndPlay;
 public class MousePlotter : MonoBehaviour
 {
 
-    public RecordingBase recording;
+    public Recording recording;
     public float scaleRadius = 1f;
 
     void OnDrawGizmos()
     {
         if (recording != null)
         {
-            foreach (IRecord record in recording.Records)
+            foreach (Record record in recording.Records)
             {
-                Record jsonRecord = record as Record;
-                MouseData mouseData = jsonRecord.ParseFromJson<MouseData>();
+                MouseData mouseData = record.ParseFromJson<MouseData>();
 
                 float radius;
                 if (mouseData.pressed)
