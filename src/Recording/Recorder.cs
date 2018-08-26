@@ -56,7 +56,7 @@ namespace RecordAndPlay
 
         [SerializeField]
         [HideInInspector]
-        protected string recordingName = "New Recording";
+        public string recordingName = "";
 
         [SerializeField]
         [HideInInspector]
@@ -72,6 +72,18 @@ namespace RecordAndPlay
         }
 
         protected abstract Recording CreateInstance();
+        virtual protected string GetDefaultRecordingName()
+        {
+            return "New Recording";
+        }
+
+        public void InitRecording()
+        {
+            if (recordingName == "")
+            {
+                recordingName = GetDefaultRecordingName();
+            }
+        }
 
         protected void Start()
         {
@@ -151,7 +163,7 @@ namespace RecordAndPlay
                 AssetDatabase.CreateFolder("Assets", recordingsPath);
             }
 
-            recordingName = recordingName.Trim() == "" ? "New Recording" : recordingName;
+            recordingName = recordingName.Trim() == "" ? GetDefaultRecordingName() : recordingName;
             string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + recordingName + ".asset");
 
             AssetDatabase.CreateAsset(recording, assetPathAndName);

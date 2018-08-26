@@ -42,6 +42,9 @@ public class RecorderInspector : Editor
 
     void OnEnable()
     {
+        Recorder recorder = target as Recorder;
+        recorder.InitRecording();
+
         // Setup the SerializedProperties.
         recordProp = serializedObject.FindProperty("doRecord");
         saveProp = serializedObject.FindProperty("doSave");
@@ -53,12 +56,11 @@ public class RecorderInspector : Editor
 
     public override void OnInspectorGUI()
     {
-        buttonStyle = EditorStyles.miniButtonMid;
-        height = GUILayout.Height(20);
-
+        Recorder recorder = target as Recorder;
         serializedObject.Update();
 
-        Recorder recorder = target as Recorder;
+        buttonStyle = EditorStyles.miniButtonMid;
+        height = GUILayout.Height(20);
 
         DrawDefaultInspector();
         EditorGUILayout.Space();

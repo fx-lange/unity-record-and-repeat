@@ -30,6 +30,11 @@ using RecordAndPlay;
 public class MouseRecorder : StringRecorder
 {
     private MouseData mouseData = new MouseData();
+    
+    override protected string GetDefaultRecordingName()
+    {
+        return "New Mouse Recording";
+    }
 
     protected new void Update()
     {

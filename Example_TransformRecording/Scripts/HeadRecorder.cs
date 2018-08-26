@@ -30,6 +30,11 @@ public class HeadRecorder : StringRecorder
 {
     public Transform headTransform;
 
+    override protected string GetDefaultRecordingName()
+    {
+        return "New Head Recording";
+    }
+
     protected new void Update()
     {
         base.Update();
@@ -41,7 +46,7 @@ public class HeadRecorder : StringRecorder
                 Debug.LogWarning("No transform target set!");
                 return;
             }
-            
+
             HeadData headData = new HeadData(headTransform);
             RecordAsJson(headData);
         }
