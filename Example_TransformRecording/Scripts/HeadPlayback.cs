@@ -28,7 +28,7 @@ using RecordAndPlay;
 
 public class HeadPlayback : DataListener
 {
-    public Transform head;
+    public Transform playbackTarget;
 
     [Header("DebugDraw")]
     public Color color;
@@ -42,10 +42,10 @@ public class HeadPlayback : DataListener
         StringDataFrame jsonFrame = results as StringDataFrame;
         headData = jsonFrame.ParseFromJson<HeadData>();
         
-        if (head != null)
+        if (playbackTarget != null)
         {
-            Transform parent = head.parent;
-            Vector3 headOffset = head.position - parent.position;
+            Transform parent = playbackTarget.parent;
+            Vector3 headOffset = playbackTarget.position - parent.position;
         
             parent.position = headData.worldPos - headOffset;
             parent.rotation = Quaternion.LookRotation(headData.forward);
