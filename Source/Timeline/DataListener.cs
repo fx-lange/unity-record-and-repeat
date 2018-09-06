@@ -26,6 +26,6 @@ namespace RecordAndPlay
 {
     public abstract class DataListener : MonoBehaviour
     {
-        public abstract void ProcessData(IRecord record);
+        public abstract void ProcessData(IDataFrame frame);
     }
 }

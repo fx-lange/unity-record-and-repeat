@@ -28,30 +28,5 @@ namespace RecordAndPlay
         {
             watchReference = other.watchReference;
         }
-
-        // public override void OnGraphStart(Playable playable)
-        // {
-        //     Debug.LogWarning("RecordingBehaviour::OnGraphStart");
-        // }
-
-        // public override void OnPlayableCreate(Playable playable)
-        // {
-        //     Debug.LogWarning("RecordingBehaviour::OnPlayableCreate");
-        // }
-
-        // public override void PrepareData(Playable playable, FrameData info)
-        // {
-        //     Debug.LogWarning("RecordingBehaviour::PrepareData");
-        // }
-
-        // public override void PrepareFrame(Playable playable, FrameData info)
-        // {
-        //     Debug.LogWarning("RecordingBehaviour::PrepareFrame");
-        // }
-
-        // public override void ProcessFrame(Playable playable, FrameData info, object playerData)
-        // {
-        //     Debug.LogWarning("RecordingBehaviour::ProcessFrame");
-        // }
     }
 }

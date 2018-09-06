@@ -26,7 +26,7 @@ using UnityEngine;
 namespace RecordAndPlay
 {
     [System.Serializable]
-    public class Record : RecordBase
+    public class DataFrame : DataFrameBase
     {
         [SerializeField]
         private string data;
