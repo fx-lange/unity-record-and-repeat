@@ -25,7 +25,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Playables;
 
-using RecordAndPlay;
+using RecordAndRepeat;
 
 [CustomEditor(typeof(RecordingClip), true)]
 public class RecordingClipInspector : Editor

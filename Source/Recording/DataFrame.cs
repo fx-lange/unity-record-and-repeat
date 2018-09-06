@@ -23,7 +23,7 @@
 using System;
 using UnityEngine;
 
-namespace RecordAndPlay
+namespace RecordAndRepeat
 {
     [System.Serializable]
     public class DataFrame : DataFrameBase

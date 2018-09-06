@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RecordAndPlay
+namespace RecordAndRepeat
 {
     public abstract class RecordingBase : ScriptableObject
     {

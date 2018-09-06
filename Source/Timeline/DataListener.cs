@@ -22,7 +22,7 @@
 
 using UnityEngine;
 
-namespace RecordAndPlay
+namespace RecordAndRepeat
 {
     public abstract class DataListener : MonoBehaviour
     {

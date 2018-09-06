@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace RecordAndPlay
+namespace RecordAndRepeat
 {
     public abstract class RecorderBase : MonoBehaviour
     {

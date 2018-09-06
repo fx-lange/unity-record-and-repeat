@@ -23,7 +23,7 @@
 using System;
 using UnityEngine;
 using UnityEditor;
-using RecordAndPlay;
+using RecordAndRepeat;
 
 [CustomEditor(typeof(RecorderBase), true)]
 public class RecorderInspector : Editor
