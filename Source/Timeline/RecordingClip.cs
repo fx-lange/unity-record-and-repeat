@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace RecordAndPlay
+namespace RecordAndRepeat
 {
     [Serializable]
     public class RecordingClip : PlayableAsset, ITimelineClipAsset

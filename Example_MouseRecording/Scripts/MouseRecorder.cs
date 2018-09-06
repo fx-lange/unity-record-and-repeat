@@ -24,7 +24,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using RecordAndPlay;
+using RecordAndRepeat;
 
 //record mouse position as world coordinates
 public class MouseRecorder : Recorder

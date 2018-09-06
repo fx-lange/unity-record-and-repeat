@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-namespace RecordAndPlay
+namespace RecordAndRepeat
 {
     public class RecordingMixerBehaviour : PlayableBehaviour
     {

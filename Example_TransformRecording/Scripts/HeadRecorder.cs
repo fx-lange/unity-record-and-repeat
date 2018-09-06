@@ -24,7 +24,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using RecordAndPlay;
+using RecordAndRepeat;
 
 public class HeadRecorder : Recorder
 {

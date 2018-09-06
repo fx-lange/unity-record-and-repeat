@@ -24,7 +24,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RecordAndPlay
+namespace RecordAndRepeat
 {
     public class Recorder : RecorderBase
     {
