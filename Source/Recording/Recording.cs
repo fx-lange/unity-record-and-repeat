@@ -29,21 +29,21 @@ namespace RecordAndPlay
     public class Recording : RecordingBase
     {
         [SerializeField]
-        private List<Record> records = new List<Record>();
+        private List<DataFrame> frames = new List<DataFrame>();
 
-        public override void Add(IRecord data)
+        public override void Add(IDataFrame frame)
         {
-            records.Add((Record)data);
+            frames.Add((DataFrame)frame);
         }
 
-        protected override IEnumerable<IRecord> GetRecords()
+        protected override IEnumerable<IDataFrame> ConvertDataFrames()
         {
-            return records.Cast<IRecord>();
+            return frames.Cast<IDataFrame>();
         }
 
         public override int Count()
         {
-            return records.Count();
+            return frames.Count();
         }
     }
 }

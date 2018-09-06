@@ -32,25 +32,25 @@ namespace RecordAndPlay
         [HideInInspector]
         public float duration = 0;
 
-        private List<IRecord> copiedRecords = null;
-        public List<IRecord> Records
+        private List<IDataFrame> copiedDataFrames = null;
+        public List<IDataFrame> DataFrames
         {
             get
             {
                 UpdateStoredDataCopy();
-                return copiedRecords;
+                return copiedDataFrames;
             }
         }
 
-        public abstract void Add(IRecord data);
+        public abstract void Add(IDataFrame frame);
         public abstract int Count();
-        protected abstract IEnumerable<IRecord> GetRecords();
+        protected abstract IEnumerable<IDataFrame> ConvertDataFrames();
 
-        public IRecord GetRecord(float timeS)
+        public IDataFrame GetDataFrame(float timeS)
         {
             UpdateStoredDataCopy();
 
-            IRecord data = copiedRecords.FindLast(x => x.Time <= timeS);
+            IDataFrame data = copiedDataFrames.FindLast(x => x.Time <= timeS);
             return data;
         }
 
@@ -58,16 +58,16 @@ namespace RecordAndPlay
         {
             UpdateStoredDataCopy();
 
-            Debug.Log(String.Format("{0} - {1} seconds - {2} samples", name, duration, copiedRecords.Count));
-            copiedRecords.ForEach(record => Debug.Log(record));
+            Debug.Log(String.Format("{0} - {1} seconds - {2} samples", name, duration, copiedDataFrames.Count));
+            copiedDataFrames.ForEach(frame => Debug.Log(frame));
         }
 
         private void UpdateStoredDataCopy()
         {
-            IEnumerable<IRecord> records = GetRecords();
-            if (copiedRecords == null || copiedRecords.Count != records.Count())
+            IEnumerable<IDataFrame> frames = ConvertDataFrames();
+            if (copiedDataFrames == null || copiedDataFrames.Count != frames.Count())
             {
-                copiedRecords = records.ToList();
+                copiedDataFrames = frames.ToList();
             }
         }
     }

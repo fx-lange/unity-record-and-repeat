@@ -40,10 +40,10 @@ namespace RecordAndPlay
 
         public void RecordString(string data)
         {
-            Record record = new Record();
-            record.Data = data;
+            DataFrame frame = new DataFrame();
+            frame.Data = data;
 
-            RecordData(record);
+            RecordData(frame);
         }
     }
 }
