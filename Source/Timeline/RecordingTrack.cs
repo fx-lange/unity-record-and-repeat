@@ -19,7 +19,7 @@ namespace RecordAndRepeat
                 {
                     if (recordingClip.template.RecordingChanged())
                     {
-                        clip.displayName = "Recording: " + recordingRef.name;
+                        clip.displayName = recordingRef.name;
                         clip.duration = recordingClip.duration;
                         clip.clipIn = 0;
                     }
