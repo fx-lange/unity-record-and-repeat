@@ -20,6 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using UnityEngine;
+
 namespace RecordAndRepeat
 {
     public interface IDataFrame
@@ -30,6 +32,7 @@ namespace RecordAndRepeat
     [System.Serializable]
     public abstract class DataFrameBase : IDataFrame
     {
+        [SerializeField]
         private float time;
         public float Time
         {
