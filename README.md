@@ -41,22 +41,21 @@ To track and visually layer user movements is another great usecase. In applicat
 
 Two scenes showcasing recording, plotting and playback of mouse data. The custom mouse class containing positions and button state is stored as a Json String.
 
+Folder: [Example_MouseRecording](Example_MouseRecording)
 
 <p align="center">
   <img src="Docs/MouseRecordingPlot.png" width=80%  />
 </p>
 
-Folder: [Example_MouseRecording](Example_MouseRecording)
-
 ### Transform
 
 In this example scene we are recording a simplified transform of the character's  head. Besides plotting the character's behaviour (via gizmos) the example also showcases replaying the recording.
 
+Folder: [Example_TransformRecording](Example_TransformRecording)
+
 <p align="center">
   <img src="Docs/HeadRecordingPlot.png" width=80%  />
 </p>
-
-Folder: [Example_TransformRecording](Example_TransformRecording)
 
 ## Usage
 
