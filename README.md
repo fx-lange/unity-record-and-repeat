@@ -1,48 +1,148 @@
-# Record and Repeat
+# RecordAndRepeat
 
-This work in progress plugin for Unity supports recording and playback of custom data via Unity Timeline.
+RecordAndRepeat is a plugin for [Unity3d](https://unity3d.com/), which supports recording of custom data and playback via the Unity3d Timeline.
 
-Using recorded rather than live data can drastically smoothen the development process of your prototypes. It was originally developed for external, camera based tracking data (OpenPose) but can handle any kind of serializable data - in game or external.
+The core of the plugin are recordings stored as [ScriptableObjects](https://docs.unity3d.com/ScriptReference/ScriptableObject.html). You can plug them into custom scripts via the Inspector (to access and visialize the data) or play them back in a flexible matter due to an integration into the powerful Unity Timeline.
 
-The core of this plugin are recordings stored as [ScriptableObjects](https://docs.unity3d.com/ScriptReference/ScriptableObject.html) which can be dragged&dropped into Timeline Clips.
+This allows for a variety of applications!
 
-![MouseRecordingPlot](https://github.com/fx-lange/unity-record-and-repeat/blob/master/Docs/MouseRecordingPlot.png)
+## Usecases
 
-To account for the technical limitations of serialization the architecture is based on several abstract classes which need to be implemented fitting your data. However, the `StringData` implementation should help to get you started: Either use it as a reference or work with it directly.
+### Prototyping with recorded data
+
+Using recorded rather than live data can drastically smoothen the development process of your prototypes. It was originally developed for recording external tracking information (OpenPose), but can handle any kind of serializable data - produced inside Unity or coming from external.
+
+<p align="center">
+  <img src="Docs/OpenPoseExample.png" width=80%  />
+</p>
+
+
+### Spatial User Testing and Training
+
+To track and visually layer user movements is another great usecase. In applications like spatial user tests or trainings conducted in AR/VR, it allows to compare, analyse and quantify user behaviours.
+
+<p align="center">
+  <img src="Docs/SpatialVRUserTesting.png" width=80%  />
+</p>
 
 ## Getting started
 
-* Download the latest unity-package under [releases](https://github.com/fx-lange/unity-record-and-repeat/releases).
-* Checkout the Example folder. Under Scenes you find a scene for a recording and one for playback of mouse interactions. The `MouseRecorder` script utilizes the `StringRecorder` and [JsonUtility](https://docs.unity3d.com/ScriptReference/JsonUtility.html) to serialize mouse data and record them as strings.
-* For recording your own data there are two options:
-  * Build a recorder on top of the `StringRecorder` (like the `MouseRecorder`)
-  * Replace the `StringRecorder` with your own custom recorder and custom recording. Check the next [section](#custom-recordings) for more details.
+* Download the latest unity-package under [releases](https://github.com/fx-lange/unity-record-and-repeat/releases). 
+* Drag and drop the package into your Asset folder inside the Project Window.
+* Checkout the [example folders](#Examples) with scenes showcasing recording, playback and plotting.
 
-## Custom Recordings
+  (Be aware, that the example scenes won't work if you clone directly instead of using the release package.)
 
-The plugin consists of two parts: 1) the recorder/recording component and 2) the playback support via Timeline.
+* Get an overview of the API in the [Usage](#Usage) section.
+
+## Examples
+
+### Mouse
+
+Two scenes showcasing recording, plotting and playback of mouse data. The custom mouse class containing positions and button state is stored as a Json String.
+
+Folder: [Example_MouseRecording](Example_MouseRecording)
+
+<p align="center">
+  <img src="Docs/MouseRecordingPlot.png" width=80%  />
+</p>
+
+### Transform
+
+In this example scene we are recording a simplified transform of the character's  head. Besides plotting the character's behaviour (via gizmos) the example also showcases replaying the recording.
+
+Folder: [Example_TransformRecording](Example_TransformRecording)
+
+<p align="center">
+  <img src="Docs/HeadRecordingPlot.png" width=80%  />
+</p>
+
+## Usage
+
+In order to hook your own data objects into RecordAndRepeat it is neccesary to extend the Recorder and Listener classes. After that you can control recording and playback via RecordAndRepeat's Inspector interface and Unity Timeline features.
 
 ### Record
 
-For recording your own data you need to implement three abstract classes - please use the `StringDataImpl` as a reference:
+It is needed to extend the `Recorder` class to define what kind of data objects you want to record to control how you want to record them (for example every frame?).
 
-* `DataFrame` only contains timestamps
+Below you find a compressed script from the [MouseRecorder](Example_MouseRecording/Scripts/MouseRecorder.cs) example, which extends `Recorder` and passes serializable data objects to the `Recorder.RecordAsJson` function.
 
-  Your implementation "MyCustomData" needs to add your own serializable data fields ([StringData](https://github.com/fx-lange/unity-record-and-repeat/tree/master/src/Implementations/StringDataImpl/StringData.cs) for reference).
+```csharp
+using RecordAndRepeat;
+public class MouseRecorder : Recorder
+{
+    [System.Serializable]
+    public class MouseData //your custom data
+    {
+        public Vector3 worldPos;
+        public bool pressed;
+    }
 
-* `Recording` is an abstract `ScriptableObject`.
+    //Initialize members...
 
-  In your "MyCustomRecording" add a private `List<MyCustomData>` and override `IEnumerable<DataFrame> GetDataFrames()` and `void Add(DataFrame data)` ([StringRecording](https://github.com/fx-lange/unity-record-and-repeat/tree/master/src/Implementations/StringDataImpl/StringRecording.cs) for reference).
+    protected new void Update()
+    {
+        base.Update();
 
-* `Recorder` is an abstract `MonoBehaviour`.
+        if (IsRecording)
+        {
+            // Update mouseData...
 
-  Your recorder implementation has to override the `Recording CreateInstance()` which simply needs to return a `ScriptableObject.CreateInstance<MyCustomRecording>()`.
-  Additionally, creating your "MyCustomData" objects and passing them to `RecordData(DataFrame dataFrame)` ([StringRecorder](https://github.com/fx-lange/unity-record-and-repeat/tree/master/src/Implementations/StringDataImpl/StringRecorder.cs) for reference).
+            RecordAsJson(mouseData);
+        }
+    }
+}
+```
+
+Controlling the recorder as well as defining the name of the recording is done via the Inspector interface after adding the extended recorder as a component.
+
+<p align="center">
+  <img src="Docs/Recording.png" width=80%  />
+</p>
+
+### Plot
+
+If you want to visualize a whole recording for example, the getter `List<IDataFrame> Recording.DataFrames` allows to work directly with Recordings in custom scripts. In this case it is not needed to extend `DataListener`.
+
+```csharp
+foreach (DataFrame frame in recording.DataFrames)
+{
+    MouseData mouseData = frame.ParseFromJson<MouseData>();
+    ...
+}
+```
+
+*Snippet of [MouseDrawer](Example_MouseRecording/Scripts/MouseDrawer.cs) example.*
 
 ### Repeat
 
-Recordings stored as `ScriptableObjects` in the asset folder can be dragged&dropped into Timeline RecordingTracks/RecordingClips.
+Recordings can be drag&dropped into RecordAndRepeat Timeline tracks and arranged via the Timeline interface. 
 
-To receive your "MyCustomData" during playback a `DataListener` implementation is needed - overriding the `void ProcessData(DataFrame data)` method.
+<p align="center">
+  <img src="Docs/TimelineDragAndDrop.gif" width=80%  />
+</p>
 
-Finally, add your listener game object as a TrackBinding into RecordAndRepeat RecordingTracks. This game object is probably already part of your application - now using recorded data instead of live data.
+In order to receive the data during playback you only have to implement the abstract `DataListener.ProcessData(IDataFrame)` method. By extending `DataListener` and adding it as a component you can use your GameObject as a _TrackBinding_ in corresponding tracks.
+
+```csharp
+using RecordAndRepeat;
+public class MouseDrawer : DataListener
+
+  //Initialize members...
+  
+  public override void ProcessData(IDataFrame frame)
+  {
+      DataFrame jsonFrame = frame as DataFrame;
+      mouseData = jsonFrame.ParseFromJson<MouseData>();
+  }
+  
+  ...
+}
+```
+
+As you can see in this snippet from the [MouseDrawer](Example_MouseRecording/Scripts/MouseDrawer.cs) script, after converting `IDataFrame` you can access the data via `DataFrame.ParseFromJson<T>()`. Make sure to use the correct type _T_.
+
+<!-- ### Settings (should both be part of the examples + comment )
+
+* default name
+* playmode only -->
