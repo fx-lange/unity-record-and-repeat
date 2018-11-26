@@ -118,7 +118,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: 'Recording: New Head Recording 1'
+    m_DisplayName: LongRecording
     m_Version: 1
   - m_Start: 0
     m_ClipIn: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: 'Recording: ShortRecording'
+    m_DisplayName: ShortRecording
     m_Version: 1
   m_Version: 1
 --- !u!114 &114671259712642640
