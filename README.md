@@ -33,7 +33,7 @@ To track and visually layer user movements is another great usecase. In applicat
 
   (Be aware, that the example scenes won't work if you clone directly instead of using the release package.)
 
-* Get an overview of the API in the next [section](#Usage).
+* Get an overview of the API in the [Usage](#Usage) section.
 
 ## Examples
 
