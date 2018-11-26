@@ -1,10 +1,12 @@
-# Introduction
+# RecordAndRepeat
 
 RecordAndRepeat is a plugin for [Unity3d](https://unity3d.com/), which supports recording of custom data and playback via the Unity3d Timeline.
 
 The core of the plugin are recordings stored as [ScriptableObjects](https://docs.unity3d.com/ScriptReference/ScriptableObject.html). You can plug them into custom scripts via the Inspector (to access and visialize the data) or play them back in a flexible matter due to an integration into the powerful Unity Timeline.
 
 This allows for a variety of applications!
+
+## Usecases
 
 ### Prototyping with recorded data
 
@@ -25,10 +27,13 @@ To track and visually layer user movements is another great usecase. In applicat
 
 ## Getting started
 
-* Download the latest unity-package under [releases](https://github.com/fx-lange/unity-record-and-repeat/releases).
+* Download the latest unity-package under [releases](https://github.com/fx-lange/unity-record-and-repeat/releases). 
 * Drag and drop the package into your Asset folder inside the Project Window.
 * Checkout the [example folders](#Examples) with scenes showcasing recording, playback and plotting.
-* Get an overview of the API in the next [section](#Usage)
+
+  (Be aware, that the example scenes won't work if you clone directly instead of using the release package.)
+
+* Get an overview of the API in the next [section](#Usage).
 
 ## Examples
 
@@ -36,18 +41,22 @@ To track and visually layer user movements is another great usecase. In applicat
 
 Two scenes showcasing recording, plotting and playback of mouse data. The custom mouse class containing positions and button state is stored as a Json String.
 
-Folder: [Example_MouseRecording](Example_MouseRecording)
 
-![MouseRecordingPlot](Docs/MouseRecordingPlot.png)
+<p align="center">
+  <img src="Docs/MouseRecordingPlot.png" width=80%  />
+</p>
+
+Folder: [Example_MouseRecording](Example_MouseRecording)
 
 ### Transform
 
 In this example scene we are recording a simplified transform of the character's  head. Besides plotting the character's behaviour (via gizmos) the example also showcases replaying the recording.
 
+<p align="center">
+  <img src="Docs/HeadRecordingPlot.png" width=80%  />
+</p>
+
 Folder: [Example_TransformRecording](Example_TransformRecording)
-
-![HeadRecordingPlot](Docs/HeadRecordingPlot.png)
-
 
 ## Usage
 
@@ -94,7 +103,7 @@ Controlling the recorder as well as defining the name of the recording is done v
 
 ### Plot
 
-If you for example want to visualize a whole recording, the getter `List<IDataFrame> Recording.DataFrames` allows to work directly with Recordings in custom scripts. In this case it is not needed to extend `DataListener`.
+If you want to visualize a whole recording for example, the getter `List<IDataFrame> Recording.DataFrames` allows to work directly with Recordings in custom scripts. In this case it is not needed to extend `DataListener`.
 
 ```csharp
 foreach (DataFrame frame in recording.DataFrames)
@@ -115,7 +124,6 @@ Recordings can be drag&dropped into RecordAndRepeat Timeline tracks and arranged
 </p>
 
 In order to receive the data during playback you only have to implement the abstract `DataListener.ProcessData(IDataFrame)` method. By extending `DataListener` and adding it as a component you can use your GameObject as a _TrackBinding_ in corresponding tracks.
-
 
 ```csharp
 using RecordAndRepeat;
