@@ -24,42 +24,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using RecordAndRepeat;
-
-public class HeadPlayback : DataListener
+namespace RecordAndRepeat.Examples
 {
-    public Transform playbackTarget;
-
-    [Header("DebugDraw")]
-    public Color color;
-    public float radius = 0.5f;
-    public float rayLength = 0.1f;
-
-    private HeadData headData = null;
-
-    public override void ProcessData(IDataFrame frame)
+    public class HeadPlayback : DataListener
     {
-        DataFrame jsonFrame = frame as DataFrame;
-        headData = jsonFrame.ParseFromJson<HeadData>();
+        public Transform playbackTarget;
 
-        if (playbackTarget != null)
+        [Header("DebugDraw")]
+        public Color color;
+        public float radius = 0.5f;
+        public float rayLength = 0.1f;
+
+        private HeadData headData = null;
+
+        public override void ProcessData(IDataFrame frame)
         {
-            Transform parent = playbackTarget.parent;
-            Vector3 headOffset = playbackTarget.position - parent.position;
+            DataFrame jsonFrame = frame as DataFrame;
+            headData = jsonFrame.ParseFromJson<HeadData>();
 
-            parent.position = headData.worldPos - headOffset;
-            parent.rotation = Quaternion.LookRotation(headData.forward);
-        }
-    }
+            if (playbackTarget != null)
+            {
+                Transform parent = playbackTarget.parent;
+                Vector3 headOffset = playbackTarget.position - parent.position;
 
-    void OnDrawGizmos()
-    {
-        if (headData == null)
-        {
-            return;
+                parent.position = headData.worldPos - headOffset;
+                parent.rotation = Quaternion.LookRotation(headData.forward);
+            }
         }
 
-        Gizmos.color = color;
-        headData.DebugDraw(radius, rayLength);
+        void OnDrawGizmos()
+        {
+            if (headData == null)
+            {
+                return;
+            }
+
+            Gizmos.color = color;
+            headData.DebugDraw(radius, rayLength);
+        }
     }
 }

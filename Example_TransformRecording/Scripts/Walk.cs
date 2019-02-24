@@ -2,30 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Walk : MonoBehaviour
+namespace RecordAndRepeat.Examples
 {
-    public float moveSpeed = 0.1f;
-    public float rotationSpeed = 5f;
-
-    // Update is called once per frame
-    void FixedUpdate()
+    public class Walk : MonoBehaviour
     {
-        if (Input.GetKey("w"))
-        {
-            transform.position += transform.forward * moveSpeed;
-        }
-        else if (Input.GetKey("s"))
-        {
-            transform.position -= transform.forward * moveSpeed;
-        }
+        public float moveSpeed = 0.1f;
+        public float rotationSpeed = 5f;
 
-        if (Input.GetKey("a"))
+        // Update is called once per frame
+        void FixedUpdate()
         {
-            transform.Rotate(new Vector3(0, -rotationSpeed, 0));
-        }
-        else if (Input.GetKey("d"))
-        {
-            transform.Rotate(new Vector3(0, +rotationSpeed, 0));
+            if (Input.GetKey("w"))
+            {
+                transform.position += transform.forward * moveSpeed;
+            }
+            else if (Input.GetKey("s"))
+            {
+                transform.position -= transform.forward * moveSpeed;
+            }
+
+            if (Input.GetKey("a"))
+            {
+                transform.Rotate(new Vector3(0, -rotationSpeed, 0));
+            }
+            else if (Input.GetKey("d"))
+            {
+                transform.Rotate(new Vector3(0, +rotationSpeed, 0));
+            }
         }
     }
 }

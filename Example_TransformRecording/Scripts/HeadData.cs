@@ -22,27 +22,28 @@
 
 using UnityEngine;
 
-using RecordAndRepeat;
-
-[System.Serializable]
-public class HeadData
+namespace RecordAndRepeat.Examples
 {
-    public Vector3 worldPos;
-    public Vector3 forward;
-
-    public HeadData() { }
-    public HeadData(Transform t)
+    [System.Serializable]
+    public class HeadData
     {
-        worldPos = t.position;
-        forward = t.forward;
-    }
+        public Vector3 worldPos;
+        public Vector3 forward;
 
-    public void DebugDraw(float radius, float rayLength)
-    {
-        Gizmos.DrawWireSphere(worldPos, radius);
+        public HeadData() { }
+        public HeadData(Transform t)
+        {
+            worldPos = t.position;
+            forward = t.forward;
+        }
 
-        Vector3 from = worldPos;
-        Vector3 to = from + forward * rayLength;
-        Gizmos.DrawLine(from, to);
+        public void DebugDraw(float radius, float rayLength)
+        {
+            Gizmos.DrawWireSphere(worldPos, radius);
+
+            Vector3 from = worldPos;
+            Vector3 to = from + forward * rayLength;
+            Gizmos.DrawLine(from, to);
+        }
     }
 }
