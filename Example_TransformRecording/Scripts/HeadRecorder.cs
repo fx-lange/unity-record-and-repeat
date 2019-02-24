@@ -24,31 +24,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using RecordAndRepeat;
-
-public class HeadRecorder : Recorder
+namespace RecordAndRepeat.Examples
 {
-    public Transform headTransform;
-
-    override protected string GetDefaultRecordingName()
+    public class HeadRecorder : Recorder
     {
-        return "New Head Recording";
-    }
+        public Transform headTransform;
 
-    protected new void Update()
-    {
-        base.Update();
-
-        if (IsRecording)
+        override protected string GetDefaultRecordingName()
         {
-            if (headTransform == null)
-            {
-                Debug.LogWarning("No transform target set!");
-                return;
-            }
+            return "New Head Recording";
+        }
 
-            HeadData headData = new HeadData(headTransform);
-            RecordAsJson(headData);
+        protected new void Update()
+        {
+            base.Update();
+
+            if (IsRecording)
+            {
+                if (headTransform == null)
+                {
+                    Debug.LogWarning("No transform target set!");
+                    return;
+                }
+
+                HeadData headData = new HeadData(headTransform);
+                RecordAsJson(headData);
+            }
         }
     }
 }

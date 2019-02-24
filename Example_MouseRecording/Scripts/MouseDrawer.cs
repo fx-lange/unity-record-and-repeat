@@ -24,33 +24,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using RecordAndRepeat;
-
-public class MouseDrawer : DataListener
+namespace RecordAndRepeat.Examples
 {
-
-    private MouseData mouseData = new MouseData();
-
-    public override void ProcessData(IDataFrame frame)
+    public class MouseDrawer : DataListener
     {
-        DataFrame jsonFrame = frame as DataFrame;
-        mouseData = jsonFrame.ParseFromJson<MouseData>();
-    }
 
-    void OnDrawGizmos()
-    {
-        float radius;
-        if (mouseData.pressed)
+        private MouseData mouseData = new MouseData();
+
+        public override void ProcessData(IDataFrame frame)
         {
-            radius = 1.2f;
-            Gizmos.color = Color.green;
-        }
-        else
-        {
-            radius = 1;
-            Gizmos.color = Color.grey;
+            DataFrame jsonFrame = frame as DataFrame;
+            mouseData = jsonFrame.ParseFromJson<MouseData>();
         }
 
-        Gizmos.DrawWireSphere(mouseData.worldPos, radius);
+        void OnDrawGizmos()
+        {
+            float radius;
+            if (mouseData.pressed)
+            {
+                radius = 1.2f;
+                Gizmos.color = Color.green;
+            }
+            else
+            {
+                radius = 1;
+                Gizmos.color = Color.grey;
+            }
+
+            Gizmos.DrawWireSphere(mouseData.worldPos, radius);
+        }
     }
 }
+

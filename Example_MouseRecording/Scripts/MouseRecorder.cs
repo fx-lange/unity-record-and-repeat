@@ -24,44 +24,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using RecordAndRepeat;
-
-//record mouse position as world coordinates
-public class MouseRecorder : Recorder
+namespace RecordAndRepeat.Examples
 {
-    private MouseData mouseData = new MouseData();
-    
-    override protected string GetDefaultRecordingName()
+    public class MouseRecorder : Recorder
     {
-        return "New Mouse Recording";
-    }
+        private MouseData mouseData = new MouseData();
 
-    protected new void Update()
-    {
-        base.Update();
-
-        Vector3 mouse = Input.mousePosition;
-        mouse.z = 10;
-
-        mouseData.worldPos = Camera.main.ScreenToWorldPoint(mouse);
-        mouseData.pressed = Input.GetMouseButton(0);
-
-        if (IsRecording)
+        override protected string GetDefaultRecordingName()
         {
-            RecordAsJson(mouseData);
+            return "New Mouse Recording";
         }
-    }
 
-    void OnDrawGizmos()
-    {
-        if (IsRecording)
+        protected new void Update()
         {
-            Gizmos.color = Color.red;
+            base.Update();
+
+            Vector3 mouse = Input.mousePosition;
+            mouse.z = 10;
+
+            mouseData.worldPos = Camera.main.ScreenToWorldPoint(mouse);
+            mouseData.pressed = Input.GetMouseButton(0);
+
+            if (IsRecording)
+            {
+                RecordAsJson(mouseData);
+            }
         }
-        else
+
+        void OnDrawGizmos()
         {
-            Gizmos.color = Color.grey;
+            if (IsRecording)
+            {
+                Gizmos.color = Color.red;
+            }
+            else
+            {
+                Gizmos.color = Color.grey;
+            }
+            Gizmos.DrawWireSphere(mouseData.worldPos, mouseData.pressed ? 1.2f : 1f);
         }
-        Gizmos.DrawWireSphere(mouseData.worldPos, mouseData.pressed ? 1.2f : 1f);
     }
 }

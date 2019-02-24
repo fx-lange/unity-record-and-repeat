@@ -24,64 +24,65 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using RecordAndRepeat;
-
-public class HeadPlotter : MonoBehaviour
+namespace RecordAndRepeat.Examples
 {
-
-    [System.Serializable]
-    public class ColoredRecording
+    public class HeadPlotter : MonoBehaviour
     {
-        public Recording recording = null;
-        public Color color = Color.white;
-    }
 
-    public List<ColoredRecording> recordings = new List<ColoredRecording>();
-
-    [Header("Size")]
-    public float radius = 0.5f;
-    public float rayLength = 0.1f;
-
-    [Range(0, 1)]
-    public float connectionAlpha = 1f;
-
-    void OnDrawGizmos()
-    {
-        //loop recordings
-        foreach (ColoredRecording coloredRec in recordings)
+        [System.Serializable]
+        public class ColoredRecording
         {
-            Recording recording = coloredRec.recording;
-            if (recording == null)
+            public Recording recording = null;
+            public Color color = Color.white;
+        }
+
+        public List<ColoredRecording> recordings = new List<ColoredRecording>();
+
+        [Header("Size")]
+        public float radius = 0.5f;
+        public float rayLength = 0.1f;
+
+        [Range(0, 1)]
+        public float connectionAlpha = 1f;
+
+        void OnDrawGizmos()
+        {
+            //loop recordings
+            foreach (ColoredRecording coloredRec in recordings)
             {
-                continue;
-            }
-
-            //draw colored recording
-            HeadData lastHeadData = null;
-            foreach (DataFrame frame in recording.DataFrames)
-            {
-
-                HeadData headData = frame.ParseFromJson<HeadData>();
-
-                //draw head
-                Gizmos.color = coloredRec.color;
-                headData.DebugDraw(radius, rayLength);
-
-                //draw connection between heads
-                if (lastHeadData != null)
+                Recording recording = coloredRec.recording;
+                if (recording == null)
                 {
-                    SetGizmoAlpha(connectionAlpha);
-                    Gizmos.DrawLine(lastHeadData.worldPos, headData.worldPos);
+                    continue;
                 }
-                lastHeadData = headData;
+
+                //draw colored recording
+                HeadData lastHeadData = null;
+                foreach (DataFrame frame in recording.DataFrames)
+                {
+
+                    HeadData headData = frame.ParseFromJson<HeadData>();
+
+                    //draw head
+                    Gizmos.color = coloredRec.color;
+                    headData.DebugDraw(radius, rayLength);
+
+                    //draw connection between heads
+                    if (lastHeadData != null)
+                    {
+                        SetGizmoAlpha(connectionAlpha);
+                        Gizmos.DrawLine(lastHeadData.worldPos, headData.worldPos);
+                    }
+                    lastHeadData = headData;
+                }
             }
         }
-    }
 
-    void SetGizmoAlpha(float alpha)
-    {
-        Color drawColor = Gizmos.color;
-        drawColor.a = alpha;
-        Gizmos.color = drawColor;
+        void SetGizmoAlpha(float alpha)
+        {
+            Color drawColor = Gizmos.color;
+            drawColor.a = alpha;
+            Gizmos.color = drawColor;
+        }
     }
 }
