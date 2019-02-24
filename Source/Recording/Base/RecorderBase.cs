@@ -33,6 +33,8 @@ namespace RecordAndRepeat
     {
         //folder to store recordings
         protected static string recordingsPath = "DataRecordings";
+        [HideInInspector]
+        public string recordingName = "";
 
         //interface via inspector
         [HideInInspector]
@@ -53,10 +55,6 @@ namespace RecordAndRepeat
         [SerializeField]
         [HideInInspector]
         private RecordingBase recording = null;
-
-        [SerializeField]
-        [HideInInspector]
-        public string recordingName = "";
 
         [SerializeField]
         [HideInInspector]
@@ -116,7 +114,7 @@ namespace RecordAndRepeat
             }
         }
 
-        void StartRecording()
+        public void StartRecording()
         {
             recording = CreateInstance();
 
@@ -125,14 +123,14 @@ namespace RecordAndRepeat
             isPaused = false;
         }
 
-        void PauseRecording()
+        public void PauseRecording()
         {
             // Debug.Log("PauseRecording");
             isPaused = true;
             pauseStartTimeSec = Time.realtimeSinceStartup;
         }
 
-        void ContinueRecording()
+        public void ContinueRecording()
         {
             float pauseDuration = Time.realtimeSinceStartup - pauseStartTimeSec;
             startTimeSec += pauseDuration;
@@ -140,14 +138,14 @@ namespace RecordAndRepeat
             // Debug.Log(String.Format("ContinueRecording after {0}",pauseDuration));
         }
 
-        void CancelRecording()
+        public void CancelRecording()
         {
             ResetRecorder();
 
             responseText = "Recording canceled!";
         }
 
-        void SaveRecording()
+        public void SaveRecording()
         {
 #if UNITY_EDITOR
             if (recording == null || recording.duration <= 0)
