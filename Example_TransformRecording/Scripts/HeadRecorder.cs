@@ -30,9 +30,9 @@ namespace RecordAndRepeat.Examples
     {
         public Transform headTransform;
 
-        override protected string GetDefaultRecordingName()
+        public HeadRecorder()
         {
-            return "New Head Recording";
+            DefaultRecordingName = "New Head Recording";
         }
 
         protected new void Update()
