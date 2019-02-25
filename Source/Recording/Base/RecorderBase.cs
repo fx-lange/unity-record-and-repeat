@@ -68,18 +68,19 @@ namespace RecordAndRepeat
         {
             get { return String.Format("Assets/{0}", recordingsPath); }
         }
+        public string DefaultRecordingName { get; set; }
 
         protected abstract RecordingBase CreateInstance();
-        virtual protected string GetDefaultRecordingName()
-        {
-            return "New Recording";
-        }
 
         public void InitRecording()
         {
+            if (DefaultRecordingName == "")
+            {
+                DefaultRecordingName = "New Recording";
+            }
             if (recordingName == "")
             {
-                recordingName = GetDefaultRecordingName();
+                recordingName = DefaultRecordingName;
             }
         }
 
@@ -161,7 +162,7 @@ namespace RecordAndRepeat
                 AssetDatabase.CreateFolder("Assets", recordingsPath);
             }
 
-            recordingName = recordingName.Trim() == "" ? GetDefaultRecordingName() : recordingName;
+            recordingName = recordingName.Trim() == "" ? DefaultRecordingName : recordingName;
             string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + recordingName + ".asset");
 
             AssetDatabase.CreateAsset(recording, assetPathAndName);

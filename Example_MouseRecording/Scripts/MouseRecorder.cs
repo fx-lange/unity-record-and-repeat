@@ -30,9 +30,9 @@ namespace RecordAndRepeat.Examples
     {
         private MouseData mouseData = new MouseData();
 
-        override protected string GetDefaultRecordingName()
+        public MouseRecorder()
         {
-            return "New Mouse Recording";
+            DefaultRecordingName = "New Mouse Recording";
         }
 
         protected new void Update()
