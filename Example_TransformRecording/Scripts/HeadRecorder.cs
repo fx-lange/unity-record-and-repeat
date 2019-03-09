@@ -26,30 +26,36 @@ using UnityEngine;
 
 namespace RecordAndRepeat.Examples
 {
-    public class HeadRecorder : Recorder
+    [RequireComponent(typeof(Recorder))]
+    [ExecuteInEditMode]
+    public class HeadRecorder : MonoBehaviour
     {
         public Transform headTransform;
 
-        public HeadRecorder()
+        private Recorder recorder;
+
+        void Awake()
         {
-            DefaultRecordingName = "New Head Recording";
+            recorder = GetComponent<Recorder>();
+            recorder.DefaultRecordingName = "New Head Recording!";
+            recorder.disableIfNotPlaying = false;
         }
 
-        protected new void Update()
+        void Update()
         {
-            base.Update();
-
-            if (IsRecording)
+            if (!recorder.IsRecording)
             {
-                if (headTransform == null)
-                {
-                    Debug.LogWarning("No transform target set!");
-                    return;
-                }
-
-                HeadData headData = new HeadData(headTransform);
-                RecordAsJson(headData);
+                return;
             }
+
+            if (headTransform == null)
+            {
+                Debug.LogWarning("No transform target set!");
+                return;
+            }
+
+            HeadData headData = new HeadData(headTransform);
+            recorder.RecordAsJson(headData);
         }
     }
 }

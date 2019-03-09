@@ -121,6 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 782452546}
+  - component: {fileID: 782452548}
   - component: {fileID: 782452547}
   m_Layer: 0
   m_Name: Recorder
@@ -155,14 +156,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfcfa09f9ee5243eb8ce36998f94ec69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recordingName: New Head Recording
-  disableIfNotPlaying: 1
+  headTransform: {fileID: 1854596561}
+--- !u!114 &782452548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782452545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c00b72588b8d4d4fa8f07e1a7d4079f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recordingName: Offline 2
+  disableIfNotPlaying: 0
   doRecord: 0
   doSave: 0
   doCancel: 0
   recording: {fileID: 0}
-  responseText: 
-  headTransform: {fileID: 0}
+  responseText: Recording stored under Assets/DataRecordings/Offline 2.asset.
 --- !u!1 &788741620
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,8 +815,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131104390}
-  m_LocalRotation: {x: -0, y: -0.7660442, z: -0, w: 0.64278793}
-  m_LocalPosition: {x: 3.7398295, y: 1, z: 5.917941}
+  m_LocalRotation: {x: -0, y: -0.7071066, z: -0, w: 0.70710707}
+  m_LocalPosition: {x: -1.5977426, y: 1, z: 2.02157}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1854596561}
