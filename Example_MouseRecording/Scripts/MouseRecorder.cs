@@ -26,34 +26,37 @@ using UnityEngine;
 
 namespace RecordAndRepeat.Examples
 {
-    public class MouseRecorder : Recorder
+    [RequireComponent(typeof(Recorder))]
+    [ExecuteInEditMode]
+    public class MouseRecorder : MonoBehaviour
     {
+        
+        private Recorder recorder;
         private MouseData mouseData = new MouseData();
 
-        public MouseRecorder()
+        void Awake()
         {
-            DefaultRecordingName = "New Mouse Recording";
+            recorder = GetComponent<Recorder>();
+            recorder.DefaultRecordingName = "New Mouse Recording";
         }
 
-        protected new void Update()
+        void Update()
         {
-            base.Update();
-
             Vector3 mouse = Input.mousePosition;
             mouse.z = 10;
 
             mouseData.worldPos = Camera.main.ScreenToWorldPoint(mouse);
             mouseData.pressed = Input.GetMouseButton(0);
 
-            if (IsRecording)
+            if (recorder.IsRecording)
             {
-                RecordAsJson(mouseData);
+                recorder.RecordAsJson(mouseData);
             }
         }
 
         void OnDrawGizmos()
         {
-            if (IsRecording)
+            if (recorder.IsRecording)
             {
                 Gizmos.color = Color.red;
             }
