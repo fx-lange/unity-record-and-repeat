@@ -29,6 +29,7 @@ using UnityEditor;
 
 namespace RecordAndRepeat
 {
+    [ExecuteInEditMode]
     public abstract class RecorderBase : MonoBehaviour
     {
         //folder to store recordings
@@ -68,16 +69,12 @@ namespace RecordAndRepeat
         {
             get { return String.Format("Assets/{0}", recordingsPath); }
         }
-        public string DefaultRecordingName { get; set; }
+        public string DefaultRecordingName { get; set; } = "New Recording";
 
         protected abstract RecordingBase CreateInstance();
 
         public void InitRecording()
         {
-            if (DefaultRecordingName == "")
-            {
-                DefaultRecordingName = "New Recording";
-            }
             if (recordingName == "")
             {
                 recordingName = DefaultRecordingName;
