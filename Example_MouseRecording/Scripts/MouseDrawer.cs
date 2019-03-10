@@ -26,29 +26,12 @@ using UnityEngine;
 
 namespace RecordAndRepeat.Examples
 {
-    [ExecuteInEditMode]
     [RequireComponent(typeof(DataListener))]
     public class MouseDrawer : MonoBehaviour
     {
-
         private MouseData mouseData = new MouseData();
-        private DataListener dataListener;
 
-        void Awake()
-        {
-            dataListener = GetComponent<DataListener>();
-        }
-
-        void OnEnable()
-        {
-            dataListener.OnDataFrameReceived += ProcessData;
-        }
-
-        void OnDisable()
-        {
-            dataListener.OnDataFrameReceived -= ProcessData;
-        }
-
+        //binding via UnityEvent (DataFrameEvent of DataListener)
         public void ProcessData(IDataFrame frame)
         {
             DataFrame jsonFrame = frame as DataFrame;

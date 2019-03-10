@@ -21,19 +21,39 @@
 // SOFTWARE.
 
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RecordAndRepeat
 {
+    [System.Serializable]
+    public class DataFrameEvent : UnityEvent<IDataFrame>{}
+
+    [ExecuteInEditMode]
     public class DataListener : MonoBehaviour
     {
+        public DataFrameEvent dataFrameEvent;
+        
         public delegate void ProcessDataDel(IDataFrame frame);
         public event ProcessDataDel OnDataFrameReceived;
 
-        public void ProcessData(IDataFrame frame)
+        void Awake()
+        {
+            if (dataFrameEvent == null)
+            {
+                dataFrameEvent = new DataFrameEvent();
+            }
+        }
+
+        public virtual void ProcessData(IDataFrame frame)
         {
             if (OnDataFrameReceived != null)
             {
                 OnDataFrameReceived(frame);
+            }
+
+            if (dataFrameEvent != null)
+            {
+                dataFrameEvent.Invoke(frame);
             }
         }
     }
