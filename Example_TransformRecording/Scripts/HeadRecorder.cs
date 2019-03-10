@@ -37,7 +37,7 @@ namespace RecordAndRepeat.Examples
         void Awake()
         {
             recorder = GetComponent<Recorder>();
-            recorder.DefaultRecordingName = "New Head Recording!";
+            recorder.DefaultRecordingName = "New Head Recording";
             recorder.disableIfNotPlaying = false;
         }
 

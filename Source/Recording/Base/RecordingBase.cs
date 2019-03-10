@@ -32,6 +32,7 @@ namespace RecordAndRepeat
         [HideInInspector]
         public float duration = 0;
 
+        private bool dirtyFlag = true;
         private List<IDataFrame> copiedDataFrames = null;
         public List<IDataFrame> DataFrames
         {
@@ -62,12 +63,18 @@ namespace RecordAndRepeat
             copiedDataFrames.ForEach(frame => Debug.Log(frame));
         }
 
+        public void OnValidate()
+        {
+            dirtyFlag = true;
+        }
+
         private void UpdateStoredDataCopy()
         {
-            IEnumerable<IDataFrame> frames = ConvertDataFrames();
-            if (copiedDataFrames == null || copiedDataFrames.Count != frames.Count())
+            if (dirtyFlag || copiedDataFrames == null)
             {
-                copiedDataFrames = frames.ToList();
+                // Debug.Log($"Update copied data: {this.name}");
+                copiedDataFrames = ConvertDataFrames().ToList();
+                dirtyFlag = false;
             }
         }
     }
