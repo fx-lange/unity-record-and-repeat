@@ -26,13 +26,8 @@ using UnityEngine;
 
 namespace RecordAndRepeat
 {
-    public class Recorder : RecorderBase
+    public class Recorder : RecorderBase<Recording>
     {
-        protected override RecordingBase CreateInstance()
-        {
-            return ScriptableObject.CreateInstance<Recording>();
-        }
-
         public void RecordAsJson(object obj)
         {
             RecordString(JsonUtility.ToJson(obj));

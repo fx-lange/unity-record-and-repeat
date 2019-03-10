@@ -30,7 +30,8 @@ using UnityEditor;
 namespace RecordAndRepeat
 {
     [ExecuteInEditMode]
-    public abstract class RecorderBase : MonoBehaviour
+    public abstract class RecorderBase<T> : MonoBehaviour
+    where T : RecordingBase
     {
         //folder to store recordings
         protected static string recordingsPath = "DataRecordings";
@@ -71,7 +72,10 @@ namespace RecordAndRepeat
         }
         public string DefaultRecordingName { get; set; } = "New Recording";
 
-        protected abstract RecordingBase CreateInstance();
+        protected RecordingBase CreateInstance()
+        {
+            return ScriptableObject.CreateInstance<T>();
+        }
 
         public void InitRecording()
         {

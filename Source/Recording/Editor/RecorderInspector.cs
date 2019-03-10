@@ -25,7 +25,7 @@ using UnityEngine;
 using UnityEditor;
 using RecordAndRepeat;
 
-[CustomEditor(typeof(RecorderBase), true)]
+[CustomEditor(typeof(Recorder), true)]
 public class RecorderInspector : Editor
 {
     SerializedProperty recordProp;
@@ -40,9 +40,11 @@ public class RecorderInspector : Editor
     GUIStyle buttonStyle;
     GUILayoutOption height;
 
+    Recorder recorder;
+
     void OnEnable()
     {
-        RecorderBase recorder = target as RecorderBase;
+        recorder = target as Recorder;
         recorder.InitRecording();
 
         // Setup the SerializedProperties.
@@ -56,7 +58,8 @@ public class RecorderInspector : Editor
 
     public override void OnInspectorGUI()
     {
-        RecorderBase recorder = target as RecorderBase;
+        recorder = target as Recorder;
+
         serializedObject.Update();
 
         buttonStyle = EditorStyles.miniButtonMid;
@@ -117,8 +120,6 @@ public class RecorderInspector : Editor
 
     private void RecordToggle()
     {
-        RecorderBase recorder = target as RecorderBase;
-
         Color defaultColor = GUI.backgroundColor;
         string toggleLabel;
         if (recordProp.boolValue)
@@ -139,8 +140,6 @@ public class RecorderInspector : Editor
 
     private void RecordingGroup()
     {
-        RecorderBase recorder = target as RecorderBase;
-
         RecordingBase recordingRef = recordingProp.objectReferenceValue as RecordingBase;
 
         string type = "-";
