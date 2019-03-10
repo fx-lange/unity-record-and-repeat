@@ -637,6 +637,7 @@ GameObject:
   - component: {fileID: 2116800487}
   - component: {fileID: 2116800489}
   - component: {fileID: 2116800488}
+  - component: {fileID: 2116800491}
   - component: {fileID: 2116800490}
   m_Layer: 0
   m_Name: Playback
@@ -696,7 +697,7 @@ PlayableDirector:
   - key: {fileID: 0}
     value: {fileID: 2116800488}
   - key: {fileID: 114287511022815590, guid: 62f22b23f0aca425eaad04274554134f, type: 2}
-    value: {fileID: 2116800490}
+    value: {fileID: 2116800491}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &2116800490
@@ -715,6 +716,18 @@ MonoBehaviour:
   color: {r: 1, g: 0, b: 0, a: 0.5882353}
   radius: 0.5
   rayLength: 0.1
+--- !u!114 &2116800491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116800486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07854983c60464c10a6d5426027bdd16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2131104390
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,8 +828,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131104390}
-  m_LocalRotation: {x: -0, y: -0.7071066, z: -0, w: 0.70710707}
-  m_LocalPosition: {x: -1.5977426, y: 1, z: 2.02157}
+  m_LocalRotation: {x: -0, y: 0.9914448, z: -0, w: -0.13052644}
+  m_LocalPosition: {x: 2.9888368, y: 1, z: -2.2615063}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1854596561}

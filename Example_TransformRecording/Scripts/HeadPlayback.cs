@@ -26,7 +26,9 @@ using UnityEngine;
 
 namespace RecordAndRepeat.Examples
 {
-    public class HeadPlayback : DataListener
+    [ExecuteInEditMode]
+    [RequireComponent(typeof(DataListener))]
+    public class HeadPlayback : MonoBehaviour
     {
         public Transform playbackTarget;
 
@@ -36,8 +38,24 @@ namespace RecordAndRepeat.Examples
         public float rayLength = 0.1f;
 
         private HeadData headData = null;
+        private DataListener dataListener;
 
-        public override void ProcessData(IDataFrame frame)
+        void Awake()
+        {
+            dataListener = GetComponent<DataListener>();
+        }
+
+        void OnEnable()
+        {
+            dataListener.OnDataFrameReceived += ProcessData;
+        }
+
+        void OnDisable()
+        {
+            dataListener.OnDataFrameReceived -= ProcessData;
+        }
+
+        public void ProcessData(IDataFrame frame)
         {
             DataFrame jsonFrame = frame as DataFrame;
             headData = jsonFrame.ParseFromJson<HeadData>();
