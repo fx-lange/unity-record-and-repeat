@@ -24,8 +24,17 @@ using UnityEngine;
 
 namespace RecordAndRepeat
 {
-    public abstract class DataListener : MonoBehaviour
+    public class DataListener : MonoBehaviour
     {
-        public abstract void ProcessData(IDataFrame frame);
+        public delegate void ProcessDataDel(IDataFrame frame);
+        public event ProcessDataDel OnDataFrameReceived;
+
+        public void ProcessData(IDataFrame frame)
+        {
+            if (OnDataFrameReceived != null)
+            {
+                OnDataFrameReceived(frame);
+            }
+        }
     }
 }
