@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -33,8 +34,7 @@ namespace RecordAndRepeat
     {
         public DataFrameEvent dataFrameEvent;
         
-        public delegate void ProcessDataDel(IDataFrame frame);
-        public event ProcessDataDel OnDataFrameReceived;
+        public event Action<IDataFrame> OnDataFrameReceived;
 
         void Awake()
         {
