@@ -29,10 +29,13 @@ using UnityEditor;
 
 namespace RecordAndRepeat
 {
+    [ExecuteInEditMode]
     public abstract class RecorderBase : MonoBehaviour
     {
         //folder to store recordings
         protected static string recordingsPath = "DataRecordings";
+        [HideInInspector]
+        public string recordingName = "";
 
         //interface via inspector
         [HideInInspector]
@@ -56,10 +59,6 @@ namespace RecordAndRepeat
 
         [SerializeField]
         [HideInInspector]
-        public string recordingName = "";
-
-        [SerializeField]
-        [HideInInspector]
         private string responseText;
 
         //properties
@@ -70,18 +69,15 @@ namespace RecordAndRepeat
         {
             get { return String.Format("Assets/{0}", recordingsPath); }
         }
+        public string DefaultRecordingName { get; set; } = "New Recording";
 
         protected abstract RecordingBase CreateInstance();
-        virtual protected string GetDefaultRecordingName()
-        {
-            return "New Recording";
-        }
 
         public void InitRecording()
         {
             if (recordingName == "")
             {
-                recordingName = GetDefaultRecordingName();
+                recordingName = DefaultRecordingName;
             }
         }
 
@@ -116,7 +112,7 @@ namespace RecordAndRepeat
             }
         }
 
-        void StartRecording()
+        public void StartRecording()
         {
             recording = CreateInstance();
 
@@ -125,14 +121,14 @@ namespace RecordAndRepeat
             isPaused = false;
         }
 
-        void PauseRecording()
+        public void PauseRecording()
         {
             // Debug.Log("PauseRecording");
             isPaused = true;
             pauseStartTimeSec = Time.realtimeSinceStartup;
         }
 
-        void ContinueRecording()
+        public void ContinueRecording()
         {
             float pauseDuration = Time.realtimeSinceStartup - pauseStartTimeSec;
             startTimeSec += pauseDuration;
@@ -140,14 +136,14 @@ namespace RecordAndRepeat
             // Debug.Log(String.Format("ContinueRecording after {0}",pauseDuration));
         }
 
-        void CancelRecording()
+        public void CancelRecording()
         {
             ResetRecorder();
 
             responseText = "Recording canceled!";
         }
 
-        void SaveRecording()
+        public void SaveRecording()
         {
 #if UNITY_EDITOR
             if (recording == null || recording.duration <= 0)
@@ -163,7 +159,7 @@ namespace RecordAndRepeat
                 AssetDatabase.CreateFolder("Assets", recordingsPath);
             }
 
-            recordingName = recordingName.Trim() == "" ? GetDefaultRecordingName() : recordingName;
+            recordingName = recordingName.Trim() == "" ? DefaultRecordingName : recordingName;
             string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/" + recordingName + ".asset");
 
             AssetDatabase.CreateAsset(recording, assetPathAndName);

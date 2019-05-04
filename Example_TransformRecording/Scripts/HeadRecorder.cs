@@ -24,23 +24,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using RecordAndRepeat;
-
-public class HeadRecorder : Recorder
+namespace RecordAndRepeat.Examples
 {
-    public Transform headTransform;
-
-    override protected string GetDefaultRecordingName()
+    [RequireComponent(typeof(Recorder))]
+    [ExecuteInEditMode]
+    public class HeadRecorder : MonoBehaviour
     {
-        return "New Head Recording";
-    }
+        public Transform headTransform;
 
-    protected new void Update()
-    {
-        base.Update();
+        private Recorder recorder;
 
-        if (IsRecording)
+        void Awake()
         {
+            recorder = GetComponent<Recorder>();
+            recorder.DefaultRecordingName = "New Head Recording";
+            recorder.disableIfNotPlaying = false;
+        }
+
+        void Update()
+        {
+            if (!recorder.IsRecording)
+            {
+                return;
+            }
+
             if (headTransform == null)
             {
                 Debug.LogWarning("No transform target set!");
@@ -48,7 +55,7 @@ public class HeadRecorder : Recorder
             }
 
             HeadData headData = new HeadData(headTransform);
-            RecordAsJson(headData);
+            recorder.RecordAsJson(headData);
         }
     }
 }

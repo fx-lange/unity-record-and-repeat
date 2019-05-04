@@ -24,42 +24,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using RecordAndRepeat;
-
-public class HeadPlayback : DataListener
+namespace RecordAndRepeat.Examples
 {
-    public Transform playbackTarget;
-
-    [Header("DebugDraw")]
-    public Color color;
-    public float radius = 0.5f;
-    public float rayLength = 0.1f;
-
-    private HeadData headData = null;
-
-    public override void ProcessData(IDataFrame frame)
+    [ExecuteInEditMode]
+    [RequireComponent(typeof(DataListener))]
+    public class HeadPlayback : MonoBehaviour
     {
-        DataFrame jsonFrame = frame as DataFrame;
-        headData = jsonFrame.ParseFromJson<HeadData>();
+        public Transform playbackTarget;
 
-        if (playbackTarget != null)
+        [Header("DebugDraw")]
+        public Color color;
+        public float radius = 0.5f;
+        public float rayLength = 0.1f;
+
+        private HeadData headData = null;
+        private DataListener dataListener;
+
+        void Awake()
         {
-            Transform parent = playbackTarget.parent;
-            Vector3 headOffset = playbackTarget.position - parent.position;
-
-            parent.position = headData.worldPos - headOffset;
-            parent.rotation = Quaternion.LookRotation(headData.forward);
-        }
-    }
-
-    void OnDrawGizmos()
-    {
-        if (headData == null)
-        {
-            return;
+            dataListener = GetComponent<DataListener>();
         }
 
-        Gizmos.color = color;
-        headData.DebugDraw(radius, rayLength);
+        void OnEnable()
+        {
+            dataListener.OnDataFrameReceived += ProcessData;
+        }
+
+        void OnDisable()
+        {
+            dataListener.OnDataFrameReceived -= ProcessData;
+        }
+
+        public void ProcessData(IDataFrame frame)
+        {
+            DataFrame jsonFrame = frame as DataFrame;
+            headData = jsonFrame.ParseFromJson<HeadData>();
+
+            if (playbackTarget != null)
+            {
+                Transform parent = playbackTarget.parent;
+                Vector3 headOffset = playbackTarget.position - parent.position;
+
+                parent.position = headData.worldPos - headOffset;
+                parent.rotation = Quaternion.LookRotation(headData.forward);
+            }
+        }
+
+        void OnDrawGizmos()
+        {
+            if (headData == null)
+            {
+                return;
+            }
+
+            Gizmos.color = color;
+            headData.DebugDraw(radius, rayLength);
+        }
     }
 }

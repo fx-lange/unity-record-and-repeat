@@ -20,12 +20,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RecordAndRepeat
 {
-    public abstract class DataListener : MonoBehaviour
+    [System.Serializable]
+    public class DataFrameEvent : UnityEvent<IDataFrame>{}
+
+    [ExecuteInEditMode]
+    public class DataListener : MonoBehaviour
     {
-        public abstract void ProcessData(IDataFrame frame);
+        public DataFrameEvent dataFrameEvent;
+        
+        public event Action<IDataFrame> OnDataFrameReceived;
+
+        void Awake()
+        {
+            if (dataFrameEvent == null)
+            {
+                dataFrameEvent = new DataFrameEvent();
+            }
+        }
+
+        public virtual void ProcessData(IDataFrame frame)
+        {
+            if (OnDataFrameReceived != null)
+            {
+                OnDataFrameReceived(frame);
+            }
+
+            if (dataFrameEvent != null)
+            {
+                dataFrameEvent.Invoke(frame);
+            }
+        }
     }
 }

@@ -24,44 +24,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using RecordAndRepeat;
-
-//record mouse position as world coordinates
-public class MouseRecorder : Recorder
+namespace RecordAndRepeat.Examples
 {
-    private MouseData mouseData = new MouseData();
-    
-    override protected string GetDefaultRecordingName()
+    [RequireComponent(typeof(Recorder))]
+    [ExecuteInEditMode]
+    public class MouseRecorder : MonoBehaviour
     {
-        return "New Mouse Recording";
-    }
+        
+        private Recorder recorder;
+        private MouseData mouseData = new MouseData();
 
-    protected new void Update()
-    {
-        base.Update();
-
-        Vector3 mouse = Input.mousePosition;
-        mouse.z = 10;
-
-        mouseData.worldPos = Camera.main.ScreenToWorldPoint(mouse);
-        mouseData.pressed = Input.GetMouseButton(0);
-
-        if (IsRecording)
+        void Awake()
         {
-            RecordAsJson(mouseData);
+            recorder = GetComponent<Recorder>();
+            recorder.DefaultRecordingName = "New Mouse Recording";
         }
-    }
 
-    void OnDrawGizmos()
-    {
-        if (IsRecording)
+        void Update()
         {
-            Gizmos.color = Color.red;
+            Vector3 mouse = Input.mousePosition;
+            mouse.z = 10;
+
+            mouseData.worldPos = Camera.main.ScreenToWorldPoint(mouse);
+            mouseData.pressed = Input.GetMouseButton(0);
+
+            if (recorder.IsRecording)
+            {
+                recorder.RecordAsJson(mouseData);
+            }
         }
-        else
+
+        void OnDrawGizmos()
         {
-            Gizmos.color = Color.grey;
+            if (recorder.IsRecording)
+            {
+                Gizmos.color = Color.red;
+            }
+            else
+            {
+                Gizmos.color = Color.grey;
+            }
+            Gizmos.DrawWireSphere(mouseData.worldPos, mouseData.pressed ? 1.2f : 1f);
         }
-        Gizmos.DrawWireSphere(mouseData.worldPos, mouseData.pressed ? 1.2f : 1f);
     }
 }

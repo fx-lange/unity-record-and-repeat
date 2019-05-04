@@ -24,35 +24,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using RecordAndRepeat;
-
-public class MousePlotter : MonoBehaviour
+namespace RecordAndRepeat.Examples
 {
-
-    public Recording recording;
-    public float scaleRadius = 1f;
-
-    void OnDrawGizmos()
+    public class MousePlotter : MonoBehaviour
     {
-        if (recording != null)
+
+        public Recording recording;
+        public float scaleRadius = 1f;
+
+        void OnDrawGizmos()
         {
-            foreach (DataFrame frame in recording.DataFrames)
+            if (recording != null)
             {
-                MouseData mouseData = frame.ParseFromJson<MouseData>();
-
-                float radius;
-                if (mouseData.pressed)
+                foreach (DataFrame frame in recording.DataFrames)
                 {
-                    radius = 1.2f;
-                    Gizmos.color = Color.green;
-                }
-                else
-                {
-                    radius = 1;
-                    Gizmos.color = Color.grey;
-                }
+                    MouseData mouseData = frame.ParseFromJson<MouseData>();
 
-                Gizmos.DrawWireSphere(mouseData.worldPos, radius * scaleRadius);
+                    float radius;
+                    if (mouseData.pressed)
+                    {
+                        radius = 1.2f;
+                        Gizmos.color = Color.green;
+                    }
+                    else
+                    {
+                        radius = 1;
+                        Gizmos.color = Color.grey;
+                    }
+
+                    Gizmos.DrawWireSphere(mouseData.worldPos, radius * scaleRadius);
+                }
             }
         }
     }
