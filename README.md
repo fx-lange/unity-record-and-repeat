@@ -37,6 +37,8 @@ To track and visually layer user movements is another great usecase. In applicat
 
 ## Examples
 
+*Be aware, that the example scenes won't work if you clone directly instead of using the release package and make sure to activate Gizmos in the Game window.*
+
 ### Mouse
 
 Two scenes showcasing recording, plotting and playback of mouse data. The custom mouse class containing positions and button state is stored as a Json String.
@@ -59,17 +61,17 @@ Folder: [Example_TransformRecording](Example_TransformRecording)
 
 ## Usage
 
-In order to hook your own data objects into RecordAndRepeat it is neccesary to extend the Recorder and Listener classes. After that you can control recording and playback via RecordAndRepeat's Inspector interface and Unity Timeline features.
+`Recorder` and `DataListener` are the components needed in order to hook your own data objects into RecordAndRepeat. With that in place you can control recording and playback via RecordAndRepeat's Inspector interface and Unity Timeline features.
 
 ### Record
 
-It is needed to extend the `Recorder` class to define what kind of data objects you want to record to control how you want to record them (for example every frame?).
+The `Recorder` component allows to define what kind of data objects you want to record and to control how you want to record them (for example every frame?). Use it as a component or feel free to extend it directly.
 
-Below you find a compressed script from the [MouseRecorder](Example_MouseRecording/Scripts/MouseRecorder.cs) example, which extends `Recorder` and passes serializable data objects to the `Recorder.RecordAsJson` function.
+Below you find a compressed script from the [MouseRecorder](Example_MouseRecording/Scripts/MouseRecorder.cs) example, which utilizes the `Recorder` and passes serializable data objects to the `Recorder.RecordAsJson` function.
 
 ```csharp
 using RecordAndRepeat;
-public class MouseRecorder : Recorder
+public class MouseRecorder : MonoBehaviour
 {
     [System.Serializable]
     public class MouseData //your custom data
@@ -78,23 +80,28 @@ public class MouseRecorder : Recorder
         public bool pressed;
     }
 
-    //Initialize members...
+    Recorder recorder;
+    MouseData mouseData = new MouseData();
 
-    protected new void Update()
+    void Awake()
     {
-        base.Update();
+        recorder = GetComponent<Recorder>();
+        recorder.DefaultRecordingName = "New Mouse Recording";
+    }
 
-        if (IsRecording)
+    void Update()
+    {
+        if (recorder.IsRecording)
         {
             // Update mouseData...
 
-            RecordAsJson(mouseData);
+            recorder.RecordAsJson(mouseData);
         }
     }
 }
 ```
 
-Controlling the recorder as well as defining the name of the recording is done via the Inspector interface after adding the extended recorder as a component.
+Controlling the recorder as well as defining the name of the recording is done via the Inspector interface or via code (`Recorder.StartRecording()`, `Recorder.SaveRecording()`, `...`).
 
 <p align="center">
   <img src="Docs/Recording.png" width=80%  />
@@ -102,7 +109,7 @@ Controlling the recorder as well as defining the name of the recording is done v
 
 ### Plot
 
-If you want to visualize a whole recording for example, the getter `List<IDataFrame> Recording.DataFrames` allows to work directly with Recordings in custom scripts. In this case it is not needed to extend `DataListener`.
+If you want to visualize a whole recording for example, the getter `List<IDataFrame> Recording.DataFrames` allows to work directly with Recordings in custom scripts. In this case `DataListener` is not needed.
 
 ```csharp
 foreach (DataFrame frame in recording.DataFrames)
@@ -112,7 +119,7 @@ foreach (DataFrame frame in recording.DataFrames)
 }
 ```
 
-*Snippet of [MouseDrawer](Example_MouseRecording/Scripts/MouseDrawer.cs) example.*
+*Snippet of [MousePlotter](Example_MouseRecording/Scripts/MousePlotter.cs) example.*
 
 ### Repeat
 
@@ -122,7 +129,19 @@ Recordings can be drag&dropped into RecordAndRepeat Timeline tracks and arranged
   <img src="Docs/TimelineDragAndDrop.gif" width=80%  />
 </p>
 
-In order to receive the data during playback you only have to implement the abstract `DataListener.ProcessData(IDataFrame)` method. By extending `DataListener` and adding it as a component you can use your GameObject as a _TrackBinding_ in corresponding tracks.
+In order to receive the data during playback you can utilize the `DataListener` component, which offers C# `events` and `UnityEvents`.
+After adding `DataListener`  as a component you can use it as a _TrackBinding_ in corresponding tracks.
+
+<p align="center">
+  <img src="Docs/DataListener.png" width=80%  />
+</p>
+
+*Screenshot of [MouseDrawer](Example_MouseRecording/Scripts/MouseDrawer.cs) example.*
+
+
+-------------------
+
+As an alternative to _events_, you can extend `DataListener` and override the `DataListener.ProcessData(IDataFrame)` method.
 
 ```csharp
 using RecordAndRepeat;
@@ -139,8 +158,6 @@ public class MouseDrawer : DataListener
   ...
 }
 ```
-
-As you can see in this snippet from the [MouseDrawer](Example_MouseRecording/Scripts/MouseDrawer.cs) script, after converting `IDataFrame` you can access the data via `DataFrame.ParseFromJson<T>()`. Make sure to use the correct type _T_.
 
 <!-- ### Settings (should both be part of the examples + comment )
 
