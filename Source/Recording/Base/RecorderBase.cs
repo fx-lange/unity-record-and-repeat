@@ -114,6 +114,7 @@ namespace RecordAndRepeat
 
         public void StartRecording()
         {
+            doRecord = true;
             recording = CreateInstance();
 
             startTimeSec = Time.realtimeSinceStartup;
@@ -123,6 +124,7 @@ namespace RecordAndRepeat
 
         public void PauseRecording()
         {
+            doRecord = false;
             // Debug.Log("PauseRecording");
             isPaused = true;
             pauseStartTimeSec = Time.realtimeSinceStartup;
@@ -130,6 +132,7 @@ namespace RecordAndRepeat
 
         public void ContinueRecording()
         {
+            doRecord = true;
             float pauseDuration = Time.realtimeSinceStartup - pauseStartTimeSec;
             startTimeSec += pauseDuration;
             isPaused = false;
