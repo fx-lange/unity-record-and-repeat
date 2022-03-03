@@ -1,0 +1,18 @@
+{
+  "name": "com.fxlange.record-and-repeat",
+  "version": "0.4.1",
+  "displayName": "Record and Repeat",
+  "description": "Unity editor plugin, which supports recording of custom data and playback via the Unity Timeline",
+  "unity": "2020.3",
+  "author": {
+    "name": "Felix Lange",
+    "email": "mail@felixlange.dev",
+    "url": "felixlange.dev"
+  },
+  "keywords": [
+    "timeline",
+    "replay",
+    "playback"
+  ],
+  "licensesUrl": "https://github.com/fx-lange/unity-record-and-repeat/blob/main/LICENSE"
+}

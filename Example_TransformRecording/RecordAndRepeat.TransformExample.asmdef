@@ -1,0 +1,18 @@
+{
+    "name": "RecordAndRepeat.TransformExample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1a859bf890032b94fb9ffdad613e5f14"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
