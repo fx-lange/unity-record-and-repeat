@@ -27,17 +27,13 @@ To track and visually layer user movements is another great usecase. In applicat
 
 ## Getting started
 
-* Download the latest unity-package under [releases](https://github.com/fx-lange/unity-record-and-repeat/releases). 
-* Drag and drop the package into your Asset folder inside the Project Window.
+* Install via [package manager](https://docs.unity3d.com/Manual/upm-ui-giturl.html) or clone directly.
 * Checkout the [example folders](#Examples) with scenes showcasing recording, playback and plotting.
-
-  (Be aware, that the example scenes won't work if you clone directly instead of using the release package.)
-
 * Get an overview of the API in the [Usage](#Usage) section.
 
 ## Examples
 
-*Be aware, that the example scenes won't work if you clone directly instead of using the release package and make sure to activate Gizmos in the Game window.*
+*Make sure to activate Gizmos in the Game window.*
 
 ### Mouse
 
