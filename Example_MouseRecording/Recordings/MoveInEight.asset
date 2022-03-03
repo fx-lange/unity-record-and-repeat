@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05af61335a8d24a17b94b0a202d3aa46, type: 3}
-  m_Name: ScanEight
+  m_Name: MoveInEight
   m_EditorClassIdentifier: 
   duration: 12.221695
   frames:
