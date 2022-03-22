@@ -1,6 +1,6 @@
 {
   "name": "com.fxlange.record-and-repeat",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "displayName": "Record and Repeat",
   "description": "Unity editor plugin, which supports recording of custom data and playback via the Unity Timeline",
   "unity": "2020.3",
